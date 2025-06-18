@@ -227,32 +227,17 @@ export default function Home() {
   </h3>
 
   <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-8 place-items-center">
-    {[
-      { icon: "javascript", label: "JavaScript" },
-      { icon: "html-5--v1", label: "HTML 5" },
-      { icon: "css3", label: "CSS3" },
-      { icon: "tailwind_css", label: "Tailwind CSS" },
-      { icon: "typescript", label: "TypeScript" },
-      { icon: "react-native", label: "React Native" },
-    ].map(({ icon, label }, index) => (
-      <motion.div
-        key={index}
-        whileHover={{
-          rotateX: 5,
-          rotateY: 5,
-          boxShadow: `0 8px 20px ${theme.accent}55`,
-        }}
-        transition={{ type: "spring", stiffness: 300 }}
-        className="flex flex-col items-center gap-2 hover:cursor-pointer"
-      >
-        <img
-          src={`https://img.icons8.com/color/48/${icon}.png`}
-          alt={label}
-          className="w-12 h-12 drop-shadow-xl"
-        />
-        <span className="text-sm font-inter font-medium">{label}</span>
-      </motion.div>
-    ))}
+  {[
+  { icon: "javascript", label: "JavaScript" },
+  { icon: "html-5--v1", label: "HTML 5" },
+  { icon: "css3", label: "CSS3" },
+  { icon: "tailwind_css", label: "Tailwind CSS" },
+  { icon: "typescript", label: "TypeScript" },
+  { icon: "react-native", label: "React Native" },
+].map(({ icon, label }, index) => (
+  <Tool key={index} icon={icon} label={label} theme={theme} />
+))}
+
   </div>
 </motion.section>
 
@@ -275,9 +260,10 @@ export default function Home() {
 interface ToolProps {
   icon: string;
   label: string;
+  theme: Theme;
 }
 
-function Tool({ icon, label }: ToolProps) {
+function Tool({ icon, label, theme  }: ToolProps) {
   return (
     <motion.div
   whileHover={{
