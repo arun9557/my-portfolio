@@ -127,7 +127,7 @@ export default function Home() {
         vantaEffect.current = effect;
       });
     }
-
+  
     return () => {
       if (vantaEffect.current) {
         vantaEffect.current.destroy();
