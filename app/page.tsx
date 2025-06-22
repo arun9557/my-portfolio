@@ -104,7 +104,7 @@ export default function Home() {
     let vantaEffect: any;
     // Only initialize Vanta in the browser and when not in dark mode
     if (typeof window !== 'undefined' && mainRef.current && !isDarkMode && VantaTopology) {
-      vantaEffect = VantaTopology.default({
+      vantaEffect = VantaTopology({
         el: mainRef.current,
         THREE: THREE, // Pass Three.js explicitly
         mouseControls: true,
