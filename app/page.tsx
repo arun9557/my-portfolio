@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import * as THREE from 'three';
 import dynamic from 'next/dynamic';
 
-// Define VantaEffect interface inline or import from vanta.d.ts
+// Define VantaEffect interface inline
 interface VantaEffect {
   destroy: () => void;
 }
@@ -110,12 +110,7 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    if (
-      typeof window !== 'undefined' &&
-      mainRef.current &&
-      !isDarkMode &&
-      VantaTopology
-    ) {
+    if (typeof window !== 'undefined' && mainRef.current && !isDarkMode) {
       VantaTopology({
         el: mainRef.current,
         THREE: THREE,
