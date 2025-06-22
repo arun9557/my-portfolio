@@ -4,14 +4,20 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import * as THREE from 'three';
 import dynamic from 'next/dynamic';
-import('vanta/dist/vanta.topology.min.js')
-import * as VANTA from "vanta/dist/vanta.topology.min";
 
+// Define VantaEffect interface inline or import from vanta.d.ts
+interface VantaEffect {
+  destroy: () => void;
+}
 
-const VantaTopology = dynamic(() => import('vanta/dist/vanta.topology.min.js'), {
-  ssr: false,
-  loading: () => null,
-});
+// Dynamic import for VantaTopology
+const VantaTopology = dynamic(
+  () => import('vanta/dist/vanta.topology.min').then((mod) => mod.default),
+  {
+    ssr: false,
+    loading: () => null,
+  }
+);
 
 export default function Home() {
   const [isDarkMode, setIsDarkMode] = useState(true);
@@ -22,6 +28,7 @@ export default function Home() {
   const isHoveringName = useRef(false);
   const mainRef = useRef<HTMLDivElement>(null);
   const [showIntro, setShowIntro] = useState(true);
+  const vantaEffect = useRef<VantaEffect | null>(null);
 
   useEffect(() => {
     document.body.classList.toggle('dark', isDarkMode);
@@ -103,11 +110,15 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    if (typeof window !== "undefined" && mainRef.current && !isDarkMode && VANTA) 
-      {
-    vantaEffect = VANTA.default({
+    if (
+      typeof window !== 'undefined' &&
+      mainRef.current &&
+      !isDarkMode &&
+      VantaTopology
+    ) {
+      VantaTopology({
         el: mainRef.current,
-        THREE: THREE, // Pass Three.js explicitly
+        THREE: THREE,
         mouseControls: true,
         touchControls: true,
         gyroControls: false,
@@ -117,14 +128,18 @@ export default function Home() {
         scaleMobile: 1.0,
         color: 0xa6b6b6,
         backgroundColor: 0xfafcfc,
+      }).then((effect) => {
+        vantaEffect.current = effect;
       });
     }
+
     return () => {
-      if (vantaEffect) {
-        vantaEffect.destroy();
+      if (vantaEffect.current) {
+        vantaEffect.current.destroy();
         if (mainRef.current) {
           mainRef.current.style.background = isDarkMode ? '#1F2A44' : '#FFFFFF';
         }
+        vantaEffect.current = null;
       }
     };
   }, [isDarkMode]);
