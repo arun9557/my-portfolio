@@ -1,9 +1,8 @@
-import type { NextConfig } from "next";
-
-const nextConfig: NextConfig = {
+/** @type {import('next').NextConfig} */
+const nextConfig = {
   experimental: {
-    turbopack: false,
+    // turbopack: true, ❌ Remove this line
   },
-};
+}
 
 export default nextConfig;

@@ -14,9 +14,9 @@
     "typeRoots": ["./types", "./node_modules/@types"] // ✅ IMPORTANT
   },
   "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    "types" // ✅ VERY IMPORTANT
-  ]
+  "next-env.d.ts",
+  "**/*.ts",
+  "**/*.tsx",
+  "types"
+]
 }
