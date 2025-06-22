@@ -2,8 +2,14 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import * as THREE from "three";
-import TOPOLOGY from "vanta/dist/vanta.topology.min";
+import * as THREE from 'three';
+import dynamic from 'next/dynamic';
+
+// Dynamically import Vanta TOPOLOGY with SSR disabled
+const VantaTopology = dynamic(() => import('vanta/dist/vanta.topology.min.js'), {
+  ssr: false,
+  loading: () => null,
+});
 
 export default function Home() {
   const [isDarkMode, setIsDarkMode] = useState(true);
@@ -96,9 +102,11 @@ export default function Home() {
 
   useEffect(() => {
     let vantaEffect: any;
-    if (mainRef.current && !isDarkMode) {
-      vantaEffect = TOPOLOGY({
+    // Only initialize Vanta in the browser and when not in dark mode
+    if (typeof window !== 'undefined' && mainRef.current && !isDarkMode && VantaTopology) {
+      vantaEffect = VantaTopology.default({
         el: mainRef.current,
+        THREE: THREE, // Pass Three.js explicitly
         mouseControls: true,
         touchControls: true,
         gyroControls: false,
@@ -138,9 +146,9 @@ export default function Home() {
 
   const childVariants = (index: number) => ({
     hidden: { opacity: 0, x: -30, scale: 0.7 },
-    visible: { 
-      opacity: 1, 
-      x: 0, 
+    visible: {
+      opacity: 1,
+      x: 0,
       scale: 1,
       transition: { duration: 0.3, ease: 'easeOut' },
     },
@@ -281,7 +289,8 @@ export default function Home() {
           background-color: ${isDarkMode ? '#1A202C' : '#F5F7FA'};
           box-shadow: 0 2px 10px rgba(${isDarkMode ? '0, 0, 0, 0.3' : '0, 0, 0, 0.1'});
         }
-        a, p {
+        a,
+        p {
           color: ${isDarkMode ? '#D1D5DB' : '#1F2937'};
         }
         a:hover {
@@ -310,7 +319,8 @@ export default function Home() {
           margin-bottom: 0.5rem;
         }
         @keyframes pulse {
-          0%, 100% {
+          0%,
+          100% {
             transform: scale(1);
           }
           50% {
@@ -354,10 +364,18 @@ export default function Home() {
         <div className="container mx-auto flex items-center justify-between px-6">
           <div className="font-bold text-xl name-gradient">A₹UN</div>
           <div className="hidden md:flex gap-6 items-center absolute left-1/2 transform -translate-x-1/2">
-            <a href="#" className="hover:text-blue-400 transition">Home</a>
-            <a href="#projects" className="hover:text-blue-400 transition">Projects</a>
-            <a href="#" className="hover:text-blue-400 transition">Resume</a>
-            <a href="mailto:arunshekhram@gmail.com" className="hover:text-blue-400 transition">📋</a>
+            <a href="#" className="hover:text-blue-400 transition">
+              Home
+            </a>
+            <a href="#projects" className="hover:text-blue-400 transition">
+              Projects
+            </a>
+            <a href="#" className="hover:text-blue-400 transition">
+              Resume
+            </a>
+            <a href="mailto:arunshekhram@gmail.com" className="hover:text-blue-400 transition">
+              📋
+            </a>
             <button
               onClick={() => setIsDarkMode(!isDarkMode)}
               className="bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full p-2 text-white focus:outline-none"
@@ -376,10 +394,18 @@ export default function Home() {
         </div>
         {menuOpen && (
           <div className="md:hidden flex flex-col items-center gap-4 mt-4 pb-4">
-            <a href="#" className="hover:text-blue-400 transition">Home</a>
-            <a href="#projects" className="hover:text-blue-400 transition">Projects</a>
-            <a href="#" className="hover:text-blue-400 transition">Resume</a>
-            <a href="mailto:arunshekhram@gmail.com" className="hover:text-blue-400 transition">📋</a>
+            <a href="#" className="hover:text-blue-400 transition">
+              Home
+            </a>
+            <a href="#projects" className="hover:text-blue-400 transition">
+              Projects
+            </a>
+            <a href="#" className="hover:text-blue-400 transition">
+              Resume
+            </a>
+            <a href="mailto:arunshekhram@gmail.com" className="hover:text-blue-400 transition">
+              📋
+            </a>
             <button
               onClick={() => setIsDarkMode(!isDarkMode)}
               className="bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full p-2 text-white focus:outline-none"
@@ -425,8 +451,18 @@ export default function Home() {
         </motion.h1>
 
         <div className="mt-6">
-          <a href="https://github.com/arun9557" className="inline-block text-sm px-5 py-2 rounded-full font-inter mr-3 btn-hover transition">GitHub</a>
-          <a href="https://arun-shekhar-blog.example.com" className="inline-block text-sm px-5 py-2 rounded-full font-inter btn-hover transition">Blog →</a>
+          <a
+            href="https://github.com/arun9557"
+            className="inline-block text-sm px-5 py-2 rounded-full font-inter mr-3 btn-hover transition"
+          >
+            GitHub
+          </a>
+          <a
+            href="https://arun-shekhar-blog.example.com"
+            className="inline-block text-sm px-5 py-2 rounded-full font-inter btn-hover transition"
+          >
+            Blog →
+          </a>
         </div>
 
         <p className="mt-8 text-lg font-inter">
@@ -460,17 +496,16 @@ export default function Home() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.2 }}
             >
-              <img
-                src={`https://img.icons8.com/color/48/${img}.png`}
-                alt={alt}
-                className="social-icon"
-              />
+              <img src={`https://img.icons8.com/color/48/${img}.png`} alt={alt} className="social-icon" />
             </motion.a>
           ))}
         </motion.div>
 
         <p className="text-xs mt-4 font-inter">Based in India</p>
-        <p className="text-xs text-right mt-6 font-inter" style={{ color: isDarkMode ? '#00BCD4' : '#2DD4BF' }}>
+        <p
+          className="text-xs text-right mt-6 font-inter"
+          style={{ color: isDarkMode ? '#00BCD4' : '#2DD4BF' }}
+        >
           Available for projects
         </p>
       </motion.main>
@@ -482,12 +517,13 @@ export default function Home() {
         transition={{ duration: 0.8 }}
         viewport={{ once: true }}
       >
-        <h2 className="uppercase text-xs font-inter tracking-wide" style={{ color: isDarkMode ? '#00BCD4' : '#2DD4BF' }}>
+        <h2
+          className="uppercase text-xs font-inter tracking-wide"
+          style={{ color: isDarkMode ? '#00BCD4' : '#2DD4BF' }}
+        >
           Technologies
         </h2>
-        <h3 className="text-2xl mt-2 mb-8 font-inter font-semibold">
-          Tools I work with
-        </h3>
+        <h3 className="text-2xl mt-2 mb-8 font-inter font-semibold">Tools I work with</h3>
         <motion.div
           className="tech-grid"
           variants={techContainerVariants}
@@ -525,7 +561,10 @@ export default function Home() {
             </motion.div>
           ))}
         </motion.div>
-        <p className="mt-6 text-sm font-inter italic" style={{ color: isDarkMode ? '#00BCD4' : '#2DD4BF' }}>
+        <p
+          className="mt-6 text-sm font-inter italic"
+          style={{ color: isDarkMode ? '#00BCD4' : '#2DD4BF' }}
+        >
           Always learning, always evolving
         </p>
       </motion.section>
@@ -538,19 +577,28 @@ export default function Home() {
         transition={{ duration: 0.8 }}
         viewport={{ once: true }}
       >
-        <h2 className="uppercase text-xs font-inter tracking-wide" style={{ color: isDarkMode ? '#00BCD4' : '#2DD4BF' }}>
+        <h2
+          className="uppercase text-xs font-inter tracking-wide"
+          style={{ color: isDarkMode ? '#00BCD4' : '#2DD4BF' }}
+        >
           Projects
         </h2>
-        <h3 className="text-2xl mt-2 mb-8 font-inter font-semibold">
-          Some Projects I've Built
-        </h3>
+        <h3 className="text-2xl mt-2 mb-8 font-inter font-semibold">Some Projects I've Built</h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
           <div className="rounded-xl p-6 shadow-lg border border-white/10 bg-white/5">
             <h4 className="text-lg font-bold mb-2">Portfolio Website</h4>
             <p className="text-sm mb-4">React, Next.js, TailwindCSS, Framer Motion</p>
             <div className="flex gap-4">
-              <a href="https://my-portfolio-kappa-five-34.vercel.app" target="_blank" rel="noopener noreferrer">Live</a>
-              <a href="https://github.com/arun9557/my-portfolio" target="_blank" className="text-blue-400 underline">Code</a>
+              <a href="https://my-portfolio-kappa-five-34.vercel.app" target="_blank" rel="noopener noreferrer">
+                Live
+              </a>
+              <a
+                href="https://github.com/arun9557/my-portfolio"
+                target="_blank"
+                className="text-blue-400 underline"
+              >
+                Code
+              </a>
             </div>
           </div>
           <div className="rounded-xl p-6 shadow-lg border border-white/10 bg-white/5">
@@ -589,11 +637,7 @@ function Tool({ icon, label, isDarkMode }: ToolProps) {
         border: `1px solid ${isDarkMode ? 'rgba(0, 188, 212, 0.2)' : 'rgba(45, 212, 191, 0.2)'}`,
       }}
     >
-      <img
-        src={`https://img.icons8.com/color/48/${icon}.png`}
-        alt={label}
-        className="mx-auto mb-2"
-      />
+      <img src={`https://img.icons8.com/color/48/${icon}.png`} alt={label} className="mx-auto mb-2" />
       <p className="text-xs font-inter">{label}</p>
     </motion.div>
   );
