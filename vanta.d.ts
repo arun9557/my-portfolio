@@ -1,7 +1,7 @@
 declare module 'vanta/dist/vanta.topology.min' {
     import * as THREE from 'three';
   
-    interface VantaSettings {
+    export interface VantaSettings {
       el: HTMLElement | null;
       THREE: typeof THREE;
       mouseControls?: boolean;
@@ -15,7 +15,7 @@ declare module 'vanta/dist/vanta.topology.min' {
       backgroundColor?: number | string;
     }
   
-    interface VantaEffect {
+    export interface VantaEffect {
       destroy: () => void;
     }
   

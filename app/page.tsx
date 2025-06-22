@@ -4,20 +4,29 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import * as THREE from 'three';
 import dynamic from 'next/dynamic';
+import Particles from '@tsparticles/react';
 
-// Define VantaEffect interface inline
-interface VantaEffect {
-  destroy: () => void;
+
+// Define VantaSettings interface (if not defined elsewhere)
+interface VantaSettings {
+  el: HTMLElement | null;
+  THREE: typeof THREE;
+  mouseControls?: boolean;
+  touchControls?: boolean;
+  gyroControls?: boolean;
+  minHeight?: number;
+  minWidth?: number;
+  scale?: number;
+  scaleMobile?: number;
+  color?: number | string;
+  backgroundColor?: number | string;
 }
+// ... other imports and component code ...
 
-// Dynamic import for VantaTopology
-const VantaTopology = dynamic(
-  () => import('vanta/dist/vanta.topology.min').then((mod) => mod.default),
-  {
-    ssr: false,
-    loading: () => null,
-  }
-);
+const VantaTopology = async () => {
+  const mod = await import('vanta/dist/vanta.topology.min');
+  return mod.default as (settings: VantaSettings) => Promise<VantaEffect>;
+};
 
 export default function Home() {
   const [isDarkMode, setIsDarkMode] = useState(true);
@@ -110,25 +119,34 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
+    let isMounted = true;
+  
     if (typeof window !== 'undefined' && mainRef.current && !isDarkMode) {
-      VantaTopology({
-        el: mainRef.current,
-        THREE: THREE,
-        mouseControls: true,
-        touchControls: true,
-        gyroControls: false,
-        minHeight: 200.0,
-        minWidth: 200.0,
-        scale: 1.0,
-        scaleMobile: 1.0,
-        color: 0xa6b6b6,
-        backgroundColor: 0xfafcfc,
-      }).then((effect) => {
-        vantaEffect.current = effect;
+      VantaTopology().then((VantaFn) => {
+        if (isMounted) {
+          VantaFn({
+            el: mainRef.current,
+            THREE: THREE,
+            mouseControls: true,
+            touchControls: true,
+            gyroControls: false,
+            minHeight: 200.0,
+            minWidth: 200.0,
+            scale: 1.0,
+            scaleMobile: 1.0,
+            color: 0xa6b6b6,
+            backgroundColor: 0xfafcfc,
+          }).then((effect) => {
+            if (isMounted) {
+              vantaEffect.current = effect;
+            }
+          });
+        }
       });
     }
   
     return () => {
+      isMounted = false;
       if (vantaEffect.current) {
         vantaEffect.current.destroy();
         if (mainRef.current) {
