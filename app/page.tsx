@@ -5,6 +5,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import * as THREE from 'three';
 import dynamic from 'next/dynamic';
 import('vanta/dist/vanta.topology.min.js')
+import * as VANTA from "vanta/dist/vanta.topology.min";
+
 
 const VantaTopology = dynamic(() => import('vanta/dist/vanta.topology.min.js'), {
   ssr: false,
@@ -101,10 +103,9 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    let vantaEffect: any;
-    // Only initialize Vanta in the browser and when not in dark mode
-    if (typeof window !== 'undefined' && mainRef.current && !isDarkMode && VantaTopology) {
-      vantaEffect = VantaTopology({
+    if (typeof window !== "undefined" && mainRef.current && !isDarkMode && VANTA) 
+      {
+    vantaEffect = VANTA.default({
         el: mainRef.current,
         THREE: THREE, // Pass Three.js explicitly
         mouseControls: true,
