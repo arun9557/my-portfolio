@@ -19,6 +19,6 @@ declare module 'vanta/dist/vanta.topology.min' {
       destroy: () => void;
     }
   
-    const VantaTopology: (settings: VantaSettings) => VantaEffect;
+    const VantaTopology: (settings: VantaSettings) => Promise<VantaEffect>;
     export default VantaTopology;
   }
