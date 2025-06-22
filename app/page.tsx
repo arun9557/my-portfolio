@@ -4,8 +4,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import * as THREE from 'three';
 import dynamic from 'next/dynamic';
+import('vanta/dist/vanta.topology.min.js')
 
-// Dynamically import Vanta TOPOLOGY with SSR disabled
 const VantaTopology = dynamic(() => import('vanta/dist/vanta.topology.min.js'), {
   ssr: false,
   loading: () => null,
