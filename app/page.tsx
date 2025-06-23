@@ -6,6 +6,10 @@ import * as THREE from 'three';
 import dynamic from 'next/dynamic';
 import Particles from '@tsparticles/react';
 
+const VantaTopology = dynamic(
+  () => import('vanta/dist/vanta.topology.min'),
+  { ssr: false }
+);
 
 // Define VantaSettings interface (if not defined elsewhere)
 interface VantaSettings {
@@ -23,10 +27,7 @@ interface VantaSettings {
 }
 // ... other imports and component code ...
 
-const VantaTopology = async () => {
-  const mod = await import('vanta/dist/vanta.topology.min');
-  return mod.default as (settings: VantaSettings) => Promise<VantaEffect>;
-};
+
 
 export default function Home() {
   const [isDarkMode, setIsDarkMode] = useState(true);
@@ -120,11 +121,10 @@ export default function Home() {
 
   useEffect(() => {
     let isMounted = true;
-  
     if (typeof window !== 'undefined' && mainRef.current && !isDarkMode) {
       VantaTopology().then((VantaFn) => {
         if (isMounted) {
-          VantaFn({
+          vantaEffect.current = VantaFn({
             el: mainRef.current,
             THREE: THREE,
             mouseControls: true,
@@ -136,22 +136,14 @@ export default function Home() {
             scaleMobile: 1.0,
             color: 0xa6b6b6,
             backgroundColor: 0xfafcfc,
-          }).then((effect) => {
-            if (isMounted) {
-              vantaEffect.current = effect;
-            }
           });
         }
       });
     }
-  
     return () => {
       isMounted = false;
       if (vantaEffect.current) {
         vantaEffect.current.destroy();
-        if (mainRef.current) {
-          mainRef.current.style.background = isDarkMode ? '#1F2A44' : '#FFFFFF';
-        }
         vantaEffect.current = null;
       }
     };
