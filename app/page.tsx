@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, easeIn, easeOut } from 'framer-motion';
 import * as THREE from 'three';
 import dynamic from 'next/dynamic';
 import Particles from '@tsparticles/react';
@@ -179,7 +179,7 @@ export default function Home() {
       opacity: 1,
       x: 0,
       scale: 1,
-      transition: { duration: 0.3, ease: 'easeOut' },
+      transition: { duration: 0.3, ease: easeOut },
     },
   });
 
@@ -188,12 +188,12 @@ export default function Home() {
     visible: {
       y: 0,
       rotateX: 0,
-      transition: { duration: 1, ease: 'easeOut' },
+      transition: { duration: 1, ease: easeOut },
     },
     exit: {
       y: '100vh',
       rotateX: -90,
-      transition: { duration: 1, ease: 'easeIn' },
+      transition: { duration: 1, ease: easeIn },
     },
   };
 
@@ -213,7 +213,7 @@ export default function Home() {
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.5, ease: 'easeOut' },
+      transition: { duration: 0.5, ease: easeOut },
     },
   };
 
