@@ -503,22 +503,40 @@ export default function Home() {
           </motion.h1>
           <motion.button
             onClick={() => setIsDarkMode(!isDarkMode)}
-            className="bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full p-4 text-white focus:outline-none hover:scale-110 transition-transform shadow-lg"
+            className="bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full p-4 text-white focus:outline-none hover:scale-110 transition-transform shadow-lg relative overflow-hidden"
             aria-label="Toggle theme"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: showIntro ? 3.4 : 0.4, duration: 0.6 }}
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.95 }}
+            style={{
+              boxShadow: isDarkMode 
+                ? '0 0 20px rgba(255, 193, 7, 0.6), 0 0 40px rgba(255, 193, 7, 0.3)' 
+                : '0 0 20px rgba(59, 130, 246, 0.6), 0 0 40px rgba(59, 130, 246, 0.3)'
+            }}
           >
+            {/* Light glow effect */}
+            <div 
+              className="absolute inset-0 rounded-full opacity-50"
+              style={{
+                background: isDarkMode 
+                  ? 'radial-gradient(circle, rgba(255, 193, 7, 0.8) 0%, transparent 70%)'
+                  : 'radial-gradient(circle, rgba(59, 130, 246, 0.8) 0%, transparent 70%)'
+              }}
+            />
+            
             <motion.span 
-              className="text-2xl block"
-              animate={{ rotate: [0, 360] }}
+              className="text-2xl block relative z-10"
+              animate={{ 
+                rotate: [0, 360],
+                scale: [1, 1.2, 1],
+                y: [0, -8, 0]
+              }}
               transition={{ 
-                duration: 2, 
-                repeat: Infinity, 
-                ease: "linear",
-                repeatDelay: 3
+                rotate: { duration: 2, repeat: Infinity, ease: "linear", repeatDelay: 3 },
+                scale: { duration: 0.6, repeat: Infinity, ease: "easeInOut", repeatDelay: 1.4 },
+                y: { duration: 0.6, repeat: Infinity, ease: "easeInOut", repeatDelay: 1.4 }
               }}
             >
               {isDarkMode ? '🌞' : '🌙'}
