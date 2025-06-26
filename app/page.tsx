@@ -19,6 +19,7 @@ declare global {
 // Define VantaSettings interface (if not defined elsewhere)
 interface VantaSettings {
   el: HTMLElement | null;
+  THREE?: typeof THREE;
   mouseControls?: boolean;
   touchControls?: boolean;
   gyroControls?: boolean;
@@ -28,7 +29,6 @@ interface VantaSettings {
   scaleMobile?: number;
   color?: number | string;
   backgroundColor?: number | string;
-  THREE?: typeof THREE;
 }
 
 export default function Home() {
