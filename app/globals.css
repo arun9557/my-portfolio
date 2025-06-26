@@ -132,11 +132,103 @@ html {
   .tech-item {
     padding: 2rem;
     border-radius: 1.25rem;
+    transition: all 0.4s ease;
+  }
+  
+  .tech-item:hover {
+    transform: translateY(-8px) scale(1.05);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
   }
   
   .tech-logo {
     width: 3rem;
     height: 3rem;
+    margin-bottom: 1rem;
+  }
+  
+  /* Better desktop spacing */
+  .theme-box {
+    margin: 2rem auto;
+    padding: 2rem;
+  }
+  
+  /* Enhanced desktop typography */
+  h1 {
+    font-size: 4rem;
+    line-height: 1.1;
+  }
+  
+  h2 {
+    font-size: 2.5rem;
+  }
+  
+  h3 {
+    font-size: 2rem;
+  }
+  
+  /* Better desktop button styling */
+  .btn-hover {
+    padding: 0.75rem 1.5rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+  }
+  
+  .btn-hover:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
+  }
+  
+  /* Enhanced social icons for desktop */
+  .social-icon {
+    width: 3rem;
+    height: 3rem;
+    transition: all 0.3s ease;
+  }
+  
+  .social-icon:hover {
+    transform: scale(1.3) rotate(5deg);
+  }
+  
+  /* Better desktop navigation */
+  nav {
+    padding: 1rem 2rem;
+  }
+  
+  /* Enhanced desktop animations */
+  .name-gradient {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    background-size: 200% 200%;
+    animation: gradientShift 3s ease-in-out infinite;
+  }
+  
+  @keyframes gradientShift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+}
+
+/* Large desktop improvements */
+@media (min-width: 1440px) {
+  .tech-grid {
+    grid-template-columns: repeat(6, 1fr);
+    gap: 2.5rem;
+  }
+  
+  .tech-item {
+    padding: 2.5rem;
+  }
+  
+  .tech-logo {
+    width: 3.5rem;
+    height: 3.5rem;
+  }
+  
+  /* Ultra-wide screen optimization */
+  .theme-box {
+    max-width: 90vw;
   }
 }
 
