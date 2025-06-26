@@ -391,7 +391,16 @@ export default function Home() {
         transition={{ duration: 0.7, delay: showIntro ? 3 : 0 }}
       >
         <div className="container mx-auto flex items-center justify-between px-6">
-          <div className="font-bold text-xl name-gradient">A₹UN</div>
+          <div className="flex items-center gap-3">
+            <div className="font-bold text-xl name-gradient">A₹UN</div>
+            <button
+              onClick={() => setIsDarkMode(!isDarkMode)}
+              className="bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full p-2 text-white focus:outline-none hover:scale-110 transition-transform"
+              aria-label="Toggle theme"
+            >
+              {isDarkMode ? '🌞' : '🌙'}
+            </button>
+          </div>
           <div className="hidden md:flex gap-6 items-center absolute left-1/2 transform -translate-x-1/2">
             <a href="#" className="hover:text-blue-400 transition">
               Home
@@ -405,13 +414,6 @@ export default function Home() {
             <a href="mailto:arunshekhram@gmail.com" className="hover:text-blue-400 transition">
               📋
             </a>
-            <button
-              onClick={() => setIsDarkMode(!isDarkMode)}
-              className="bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full p-2 text-white focus:outline-none"
-              aria-label="Toggle theme"
-            >
-              {isDarkMode ? '🌞' : '🌙'}
-            </button>
           </div>
           <button
             className="md:hidden text-white focus:outline-none text-2xl"
