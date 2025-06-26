@@ -164,8 +164,12 @@ export default function Home() {
     }
     return () => {
       isMounted = false;
-      if (vantaEffect.current) {
-        vantaEffect.current.destroy();
+      if (vantaEffect.current && typeof vantaEffect.current.destroy === 'function') {
+        try {
+          vantaEffect.current.destroy();
+        } catch (error) {
+          console.warn('Error during Vanta cleanup:', error);
+        }
         vantaEffect.current = null;
       }
     };
