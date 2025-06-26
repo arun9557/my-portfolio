@@ -98,6 +98,30 @@ html {
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
   }
+  
+  /* Fix mobile navigation spacing */
+  nav {
+    padding: 0.5rem 1rem;
+  }
+  
+  /* Ensure main content is visible on mobile */
+  main {
+    margin-top: 5rem !important;
+    padding-top: 1rem;
+  }
+  
+  /* Better mobile typography */
+  h1 {
+    font-size: 2.5rem !important;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+  
+  /* Ensure name is visible on mobile */
+  .name-gradient {
+    font-size: 2.5rem !important;
+    line-height: 1.2;
+  }
 }
 
 /* Tablet improvements */

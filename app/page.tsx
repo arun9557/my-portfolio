@@ -476,14 +476,14 @@ export default function Home() {
 
       <motion.main
         ref={mainRef}
-        className="theme-box max-w-6xl mx-auto rounded-2xl p-6 sm:p-8 md:p-12 lg:p-16 text-center mt-16 sm:mt-20 md:mt-24 mx-4 sm:mx-6 lg:mx-8"
+        className="theme-box max-w-4xl mx-auto rounded-2xl p-6 sm:p-8 md:p-10 text-center mt-16 sm:mt-20 md:mt-24 mx-4 sm:mx-6"
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ delay: showIntro ? 3.3 : 0.3, duration: 0.6 }}
       >
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 lg:gap-6 mb-4 sm:mb-6 lg:mb-8">
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mb-4 sm:mb-6">
           <motion.h1
-            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black flex justify-center flex-wrap gap-2 sm:gap-3 lg:gap-4 cursor-default"
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black flex justify-center flex-wrap gap-2 sm:gap-3 cursor-default"
             style={{ fontFamily: 'Poppins' }}
             initial="hidden"
             animate="visible"
@@ -509,7 +509,7 @@ export default function Home() {
           </motion.h1>
           <motion.button
             onClick={() => setIsDarkMode(!isDarkMode)}
-            className="bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full p-3 sm:p-4 lg:p-5 text-white focus:outline-none hover:scale-110 transition-transform shadow-lg relative overflow-hidden"
+            className="bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full p-3 sm:p-4 text-white focus:outline-none hover:scale-110 transition-transform shadow-lg relative overflow-hidden"
             aria-label="Toggle theme"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -533,7 +533,7 @@ export default function Home() {
             />
             
             <motion.span 
-              className="text-xl sm:text-2xl lg:text-3xl block relative z-10"
+              className="text-xl sm:text-2xl block relative z-10"
               animate={{ 
                 rotate: [0, 360],
                 scale: [1, 1.2, 1],
@@ -550,30 +550,30 @@ export default function Home() {
           </motion.button>
         </div>
 
-        <div className="mt-4 sm:mt-6 lg:mt-8 flex flex-col sm:flex-row gap-3 sm:gap-0 justify-center">
+        <div className="mt-4 sm:mt-6 flex flex-col sm:flex-row gap-3 sm:gap-0 justify-center">
           <a
             href="https://github.com/arun9557"
-            className="inline-block text-sm lg:text-base px-4 sm:px-5 lg:px-6 py-2 lg:py-3 rounded-full font-inter sm:mr-3 btn-hover transition"
+            className="inline-block text-sm px-4 sm:px-5 py-2 rounded-full font-inter sm:mr-3 btn-hover transition"
           >
             GitHub
           </a>
           <a
             href="https://arun-shekhar-blog.example.com"
-            className="inline-block text-sm lg:text-base px-4 sm:px-5 lg:px-6 py-2 lg:py-3 rounded-full font-inter btn-hover transition"
+            className="inline-block text-sm px-4 sm:px-5 py-2 rounded-full font-inter btn-hover transition"
           >
             Blog →
           </a>
         </div>
 
-        <p className="mt-6 sm:mt-8 lg:mt-10 text-base sm:text-lg lg:text-xl font-inter px-2 sm:px-0 max-w-4xl mx-auto">
+        <p className="mt-6 sm:mt-8 text-base sm:text-lg font-inter px-2 sm:px-0">
           <TypingText text="AI & Data Science @ IIT Jodhpur | From 12th-pass to Full-Stack Developer & Ethical Hacker in the making — building, breaking, and learning every day." />
         </p>
-        <p className="text-sm lg:text-base mt-3 opacity-75 font-inter px-4 sm:px-0 max-w-5xl mx-auto">
+        <p className="text-sm mt-3 opacity-75 font-inter px-4 sm:px-0">
           <TypingText text="From a 12th-pass student with big dreams to an AI & Data Science learner at IIT Jodhpur — on a mission to master Full-Stack Development and Ethical Hacking. Building real projects, breaking limits, and sharing the journey from zero to impact." />
         </p>
 
         <motion.div
-          className="flex justify-center gap-1 mt-6 sm:mt-8 lg:mt-10 text-xl sm:text-2xl lg:text-3xl"
+          className="flex justify-center gap-1 mt-6 sm:mt-8 text-xl sm:text-2xl"
           initial={{ x: -100, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           transition={{ delay: showIntro ? 3.5 : 0.5, duration: 0.8, staggerChildren: 0.2 }}
@@ -601,9 +601,9 @@ export default function Home() {
           ))}
         </motion.div>
 
-        <p className="text-xs lg:text-sm mt-4 lg:mt-6 font-inter">Based in India</p>
+        <p className="text-xs mt-4 font-inter">Based in India</p>
         <p
-          className="text-xs lg:text-sm text-right mt-4 sm:mt-6 lg:mt-8 font-inter"
+          className="text-xs text-right mt-4 sm:mt-6 font-inter"
           style={{ color: isDarkMode ? '#00BCD4' : '#2DD4BF' }}
         >
           Available for projects
@@ -611,7 +611,49 @@ export default function Home() {
       </motion.main>
 
       <motion.section
-        className="theme-box max-w-7xl mx-auto mt-12 sm:mt-16 lg:mt-20 px-4 sm:px-8 lg:px-12 rounded-xl p-6 sm:p-8 md:p-10 lg:p-12 shadow-2xl border border-white/10 backdrop-blur-md mx-4 sm:mx-6 lg:mx-8"
+        className="theme-box max-w-5xl mx-auto mt-12 sm:mt-16 px-4 sm:px-8 rounded-xl p-6 sm:p-8 md:p-10 shadow-2xl border border-white/10 backdrop-blur-md mx-4 sm:mx-6"
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        viewport={{ once: true }}
+      >
+        <h2
+          className="uppercase text-xs font-inter tracking-wide"
+          style={{ color: isDarkMode ? '#00BCD4' : '#2DD4BF' }}
+        >
+          Projects
+        </h2>
+        <h3 className="text-xl sm:text-2xl mt-2 mb-6 sm:mb-8 font-inter font-semibold">Some Projects I've Built</h3>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8">
+          <div className="rounded-xl p-4 sm:p-6 shadow-lg border border-white/10 bg-white/5 hover:bg-white/10 transition-all duration-300">
+            <h4 className="text-lg font-bold mb-2">Portfolio Website</h4>
+            <p className="text-sm mb-4">React, Next.js, TailwindCSS, Framer Motion</p>
+            <div className="flex gap-4">
+              <a href="https://my-portfolio-kappa-five-34.vercel.app" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">
+                Live
+              </a>
+              <a
+                href="https://github.com/arun9557/my-portfolio"
+                target="_blank"
+                className="text-blue-400 underline hover:no-underline"
+              >
+                Code
+              </a>
+            </div>
+          </div>
+          <div className="rounded-xl p-4 sm:p-6 shadow-lg border border-white/10 bg-white/5 hover:bg-white/10 transition-all duration-300">
+            <h4 className="text-lg font-bold mb-2">My Blog (Coming Soon)</h4>
+            <p className="text-sm mb-4">Next.js, Markdown, Content Layer</p>
+            <div className="flex gap-4">
+              <span className="text-gray-400">Live</span>
+              <span className="text-gray-400">Code</span>
+            </div>
+          </div>
+        </div>
+      </motion.section>
+
+      <motion.section
+        className="theme-box max-w-5xl mx-auto mt-12 sm:mt-16 px-4 sm:px-8 rounded-xl p-6 sm:p-8 md:p-10 shadow-2xl border border-white/10 backdrop-blur-md mx-4 sm:mx-6"
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
@@ -667,57 +709,6 @@ export default function Home() {
         >
           Always learning, always evolving
         </p>
-      </motion.section>
-
-      <motion.section
-        id="projects"
-        className="theme-box max-w-7xl mx-auto mt-12 sm:mt-16 lg:mt-20 px-4 sm:px-8 lg:px-12 rounded-xl p-6 sm:p-8 md:p-10 lg:p-12 shadow-2xl border border-white/10 backdrop-blur-md mx-4 sm:mx-6 lg:mx-8"
-        initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-        viewport={{ once: true }}
-      >
-        <h2
-          className="uppercase text-xs lg:text-sm font-inter tracking-wide"
-          style={{ color: isDarkMode ? '#00BCD4' : '#2DD4BF' }}
-        >
-          Projects
-        </h2>
-        <h3 className="text-xl sm:text-2xl lg:text-3xl mt-2 mb-6 sm:mb-8 lg:mb-10 font-inter font-semibold">Some Projects I've Built</h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-10">
-          <div className="rounded-xl p-4 sm:p-6 lg:p-8 shadow-lg border border-white/10 bg-white/5 hover:bg-white/10 transition-all duration-300">
-            <h4 className="text-lg lg:text-xl font-bold mb-2 lg:mb-3">Portfolio Website</h4>
-            <p className="text-sm lg:text-base mb-4 lg:mb-6">React, Next.js, TailwindCSS, Framer Motion</p>
-            <div className="flex gap-4 lg:gap-6">
-              <a href="https://my-portfolio-kappa-five-34.vercel.app" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline font-medium">
-                Live
-              </a>
-              <a
-                href="https://github.com/arun9557/my-portfolio"
-                target="_blank"
-                className="text-blue-400 underline hover:no-underline font-medium"
-              >
-                Code
-              </a>
-            </div>
-          </div>
-          <div className="rounded-xl p-4 sm:p-6 lg:p-8 shadow-lg border border-white/10 bg-white/5 hover:bg-white/10 transition-all duration-300">
-            <h4 className="text-lg lg:text-xl font-bold mb-2 lg:mb-3">My Blog (Coming Soon)</h4>
-            <p className="text-sm lg:text-base mb-4 lg:mb-6">Next.js, Markdown, Content Layer</p>
-            <div className="flex gap-4 lg:gap-6">
-              <span className="text-gray-400">Live</span>
-              <span className="text-gray-400">Code</span>
-            </div>
-          </div>
-          <div className="rounded-xl p-4 sm:p-6 lg:p-8 shadow-lg border border-white/10 bg-white/5 hover:bg-white/10 transition-all duration-300 sm:col-span-2 lg:col-span-1">
-            <h4 className="text-lg lg:text-xl font-bold mb-2 lg:mb-3">More Projects Coming</h4>
-            <p className="text-sm lg:text-base mb-4 lg:mb-6">Stay tuned for more exciting projects!</p>
-            <div className="flex gap-4 lg:gap-6">
-              <span className="text-gray-400">Live</span>
-              <span className="text-gray-400">Code</span>
-            </div>
-          </div>
-        </div>
       </motion.section>
     </>
   );
