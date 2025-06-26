@@ -391,7 +391,7 @@ export default function Home() {
           left: 0;
           width: 100%;
           height: 100vh;
-          background: ${isDarkMode ? '#1A202C' : '#F5F7FA'};
+          background: ${isDarkMode ? '#1A202C' : '#1A202C'};
           z-index: 2000;
           perspective: 1000px;
         }
