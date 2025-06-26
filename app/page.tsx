@@ -621,51 +621,9 @@ export default function Home() {
           className="uppercase text-xs font-inter tracking-wide"
           style={{ color: isDarkMode ? '#00BCD4' : '#2DD4BF' }}
         >
-          Projects
-        </h2>
-        <h3 className="text-xl sm:text-2xl mt-2 mb-6 sm:mb-8 font-inter font-semibold">Some Projects I've Built</h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8">
-          <div className="rounded-xl p-4 sm:p-6 shadow-lg border border-white/10 bg-white/5 hover:bg-white/10 transition-all duration-300">
-            <h4 className="text-lg font-bold mb-2">Portfolio Website</h4>
-            <p className="text-sm mb-4">React, Next.js, TailwindCSS, Framer Motion</p>
-            <div className="flex gap-4">
-              <a href="https://my-portfolio-kappa-five-34.vercel.app" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">
-                Live
-              </a>
-              <a
-                href="https://github.com/arun9557/my-portfolio"
-                target="_blank"
-                className="text-blue-400 underline hover:no-underline"
-              >
-                Code
-              </a>
-            </div>
-          </div>
-          <div className="rounded-xl p-4 sm:p-6 shadow-lg border border-white/10 bg-white/5 hover:bg-white/10 transition-all duration-300">
-            <h4 className="text-lg font-bold mb-2">My Blog (Coming Soon)</h4>
-            <p className="text-sm mb-4">Next.js, Markdown, Content Layer</p>
-            <div className="flex gap-4">
-              <span className="text-gray-400">Live</span>
-              <span className="text-gray-400">Code</span>
-            </div>
-          </div>
-        </div>
-      </motion.section>
-
-      <motion.section
-        className="theme-box max-w-5xl mx-auto mt-16 px-8 rounded-xl p-10 shadow-2xl border border-white/10 backdrop-blur-md"
-        initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-        viewport={{ once: true }}
-      >
-        <h2
-          className="uppercase text-xs lg:text-sm font-inter tracking-wide"
-          style={{ color: isDarkMode ? '#00BCD4' : '#2DD4BF' }}
-        >
           Technologies
         </h2>
-        <h3 className="text-xl sm:text-2xl lg:text-3xl mt-2 mb-6 sm:mb-8 lg:mb-10 font-inter font-semibold">Tools I work with</h3>
+        <h3 className="text-2xl mt-2 mb-8 font-inter font-semibold">Tools I work with</h3>
         <motion.div
           className="tech-grid"
           variants={techContainerVariants}
@@ -709,6 +667,49 @@ export default function Home() {
         >
           Always learning, always evolving
         </p>
+      </motion.section>
+
+      <motion.section
+        id="projects"
+        className="theme-box max-w-5xl mx-auto mt-16 px-8 rounded-xl p-10 shadow-2xl border border-white/10 backdrop-blur-md"
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        viewport={{ once: true }}
+      >
+        <h2
+          className="uppercase text-xs font-inter tracking-wide"
+          style={{ color: isDarkMode ? '#00BCD4' : '#2DD4BF' }}
+        >
+          Projects
+        </h2>
+        <h3 className="text-2xl mt-2 mb-8 font-inter font-semibold">Some Projects I've Built</h3>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+          <div className="rounded-xl p-6 shadow-lg border border-white/10 bg-white/5">
+            <h4 className="text-lg font-bold mb-2">Portfolio Website</h4>
+            <p className="text-sm mb-4">React, Next.js, TailwindCSS, Framer Motion</p>
+            <div className="flex gap-4">
+              <a href="https://my-portfolio-kappa-five-34.vercel.app" target="_blank" rel="noopener noreferrer">
+                Live
+              </a>
+              <a
+                href="https://github.com/arun9557/my-portfolio"
+                target="_blank"
+                className="text-blue-400 underline"
+              >
+                Code
+              </a>
+            </div>
+          </div>
+          <div className="rounded-xl p-6 shadow-lg border border-white/10 bg-white/5">
+            <h4 className="text-lg font-bold mb-2">My Blog (Coming Soon)</h4>
+            <p className="text-sm mb-4">Next.js, Markdown, Content Layer</p>
+            <div className="flex gap-4">
+              <span className="text-gray-400">Live</span>
+              <span className="text-gray-400">Code</span>
+            </div>
+          </div>
+        </div>
       </motion.section>
     </>
   );
