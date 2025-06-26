@@ -474,7 +474,7 @@ export default function Home() {
           </motion.h1>
           <motion.button
             onClick={() => setIsDarkMode(!isDarkMode)}
-            className="bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full p-3 text-white focus:outline-none hover:scale-110 transition-transform shadow-lg"
+            className="bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full p-4 text-white focus:outline-none hover:scale-110 transition-transform shadow-lg"
             aria-label="Toggle theme"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -482,7 +482,18 @@ export default function Home() {
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.95 }}
           >
-            <span className="text-xl">{isDarkMode ? '🌞' : '🌙'}</span>
+            <motion.span 
+              className="text-2xl block"
+              animate={{ rotate: [0, 360] }}
+              transition={{ 
+                duration: 2, 
+                repeat: Infinity, 
+                ease: "linear",
+                repeatDelay: 3
+              }}
+            >
+              {isDarkMode ? '🌞' : '🌙'}
+            </motion.span>
           </motion.button>
         </div>
 
