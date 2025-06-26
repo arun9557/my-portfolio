@@ -391,7 +391,7 @@ export default function Home() {
           left: 0;
           width: 100%;
           height: 100vh;
-          background: #1F2A44 !important;
+          background: #1A202C !important;
           z-index: 2000;
           perspective: 1000px;
         }
