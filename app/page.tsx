@@ -124,28 +124,42 @@ export default function Home() {
   useEffect(() => {
     let isMounted = true;
     if (typeof window !== 'undefined' && mainRef.current && !isDarkMode) {
+      // First, ensure THREE is available globally
       import('three').then((THREEModule) => {
         window.THREE = THREEModule;
+        
+        // Then import Vanta Topology
         import('vanta/dist/vanta.topology.min').then((VANTA) => {
           if (!isMounted) return;
-          const VantaTopology = VANTA.default || VANTA;
-          if (typeof VantaTopology === 'function') {
-            vantaEffect.current = VantaTopology({
-              el: mainRef.current,
-              mouseControls: true,
-              touchControls: true,
-              gyroControls: false,
-              minHeight: 200.0,
-              minWidth: 200.0,
-              scale: 1.0,
-              scaleMobile: 1.0,
-              color: 0xa6b6b6,
-              backgroundColor: 0xfafcfc,
-            });
-          } else {
-            console.error('VantaTopology is not a function:', VantaTopology);
+          
+          try {
+            // Access the Vanta function - it should be the default export
+            const VantaTopology = VANTA.default;
+            
+            if (typeof VantaTopology === 'function') {
+              vantaEffect.current = VantaTopology({
+                el: mainRef.current,
+                mouseControls: true,
+                touchControls: true,
+                gyroControls: false,
+                minHeight: 200.0,
+                minWidth: 200.0,
+                scale: 1.0,
+                scaleMobile: 1.0,
+                color: 0xa6b6b6,
+                backgroundColor: 0xfafcfc,
+              });
+            } else {
+              console.error('VantaTopology is not a function:', VantaTopology);
+            }
+          } catch (error) {
+            console.error('Error initializing Vanta:', error);
           }
+        }).catch((error) => {
+          console.error('Error loading Vanta:', error);
         });
+      }).catch((error) => {
+        console.error('Error loading THREE:', error);
       });
     }
     return () => {
