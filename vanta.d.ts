@@ -3,7 +3,7 @@ declare module 'vanta/dist/vanta.topology.min' {
   
     export interface VantaSettings {
       el: HTMLElement | null;
-      THREE: typeof THREE;
+      THREE?: typeof THREE;
       mouseControls?: boolean;
       touchControls?: boolean;
       gyroControls?: boolean;
