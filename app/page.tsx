@@ -6,15 +6,19 @@ import * as THREE from 'three';
 import dynamic from 'next/dynamic';
 import Particles from '@tsparticles/react';
 
-const VantaTopology = dynamic(
-  () => import('vanta/dist/vanta.topology.min'),
-  { ssr: false }
-);
+// Define VantaEffect as any (or import from Vanta if available)
+type VantaEffect = any;
+
+// Extend Window interface to include THREE
+declare global {
+  interface Window {
+    THREE?: typeof THREE;
+  }
+}
 
 // Define VantaSettings interface (if not defined elsewhere)
 interface VantaSettings {
   el: HTMLElement | null;
-  THREE: typeof THREE;
   mouseControls?: boolean;
   touchControls?: boolean;
   gyroControls?: boolean;
@@ -24,10 +28,8 @@ interface VantaSettings {
   scaleMobile?: number;
   color?: number | string;
   backgroundColor?: number | string;
+  THREE?: typeof THREE;
 }
-// ... other imports and component code ...
-
-
 
 export default function Home() {
   const [isDarkMode, setIsDarkMode] = useState(true);
@@ -122,22 +124,28 @@ export default function Home() {
   useEffect(() => {
     let isMounted = true;
     if (typeof window !== 'undefined' && mainRef.current && !isDarkMode) {
-      VantaTopology().then((VantaFn) => {
-        if (isMounted) {
-          vantaEffect.current = VantaFn({
-            el: mainRef.current,
-            THREE: THREE,
-            mouseControls: true,
-            touchControls: true,
-            gyroControls: false,
-            minHeight: 200.0,
-            minWidth: 200.0,
-            scale: 1.0,
-            scaleMobile: 1.0,
-            color: 0xa6b6b6,
-            backgroundColor: 0xfafcfc,
-          });
-        }
+      import('three').then((THREEModule) => {
+        window.THREE = THREEModule;
+        import('vanta/dist/vanta.topology.min').then((VANTA) => {
+          if (!isMounted) return;
+          const VantaTopology = VANTA.default || VANTA;
+          if (typeof VantaTopology === 'function') {
+            vantaEffect.current = VantaTopology({
+              el: mainRef.current,
+              mouseControls: true,
+              touchControls: true,
+              gyroControls: false,
+              minHeight: 200.0,
+              minWidth: 200.0,
+              scale: 1.0,
+              scaleMobile: 1.0,
+              color: 0xa6b6b6,
+              backgroundColor: 0xfafcfc,
+            });
+          } else {
+            console.error('VantaTopology is not a function:', VantaTopology);
+          }
+        });
       });
     }
     return () => {
