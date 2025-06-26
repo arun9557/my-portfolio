@@ -391,16 +391,7 @@ export default function Home() {
         transition={{ duration: 0.7, delay: showIntro ? 3 : 0 }}
       >
         <div className="container mx-auto flex items-center justify-between px-6">
-          <div className="flex items-center gap-3">
-            <div className="font-bold text-xl name-gradient">A₹UN</div>
-            <button
-              onClick={() => setIsDarkMode(!isDarkMode)}
-              className="bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full p-2 text-white focus:outline-none hover:scale-110 transition-transform"
-              aria-label="Toggle theme"
-            >
-              {isDarkMode ? '🌞' : '🌙'}
-            </button>
-          </div>
+          <div className="font-bold text-xl name-gradient">A₹UN</div>
           <div className="hidden md:flex gap-6 items-center absolute left-1/2 transform -translate-x-1/2">
             <a href="#" className="hover:text-blue-400 transition">
               Home
@@ -455,31 +446,45 @@ export default function Home() {
         animate={{ opacity: 1, scale: 1 }}
         transition={{ delay: showIntro ? 3.3 : 0.3, duration: 0.6 }}
       >
-        <motion.h1
-          className="text-6xl font-black mb-6 flex justify-center flex-wrap gap-3 cursor-default"
-          style={{ fontFamily: 'Poppins' }}
-          initial="hidden"
-          animate="visible"
-          variants={containerVariants}
-        >
-          {'A₹UN'.split('').map((char, index) => (
+        <div className="flex items-center justify-center gap-4 mb-6">
+          <motion.h1
+            className="text-6xl font-black flex justify-center flex-wrap gap-3 cursor-default"
+            style={{ fontFamily: 'Poppins' }}
+            initial="hidden"
+            animate="visible"
+            variants={containerVariants}
+          >
+            {'A₹UN'.split('').map((char, index) => (
+              <motion.span
+                key={index}
+                className="name-gradient hover:scale-125 transition-transform duration-300"
+                variants={childVariants(index)}
+                whileHover={{ textShadow: `0px 0px 8px ${isDarkMode ? '#00BCD4' : '#2DD4BF'}` }}
+              >
+                <TypingText text={char} />
+              </motion.span>
+            ))}
             <motion.span
-              key={index}
-              className="name-gradient hover:scale-125 transition-transform duration-300"
-              variants={childVariants(index)}
+              className="name-gradient"
+              variants={childVariants(4)}
               whileHover={{ textShadow: `0px 0px 8px ${isDarkMode ? '#00BCD4' : '#2DD4BF'}` }}
             >
-              <TypingText text={char} />
+              <TypingText text=" $HEKHAR" />
             </motion.span>
-          ))}
-          <motion.span
-            className="name-gradient"
-            variants={childVariants(4)}
-            whileHover={{ textShadow: `0px 0px 8px ${isDarkMode ? '#00BCD4' : '#2DD4BF'}` }}
+          </motion.h1>
+          <motion.button
+            onClick={() => setIsDarkMode(!isDarkMode)}
+            className="bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full p-3 text-white focus:outline-none hover:scale-110 transition-transform shadow-lg"
+            aria-label="Toggle theme"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: showIntro ? 3.4 : 0.4, duration: 0.6 }}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
           >
-            <TypingText text=" $HEKHAR" />
-          </motion.span>
-        </motion.h1>
+            <span className="text-xl">{isDarkMode ? '🌞' : '🌙'}</span>
+          </motion.button>
+        </div>
 
         <div className="mt-6">
           <a
