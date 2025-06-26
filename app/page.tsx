@@ -124,6 +124,16 @@ export default function Home() {
   useEffect(() => {
     let isMounted = true;
     if (typeof window !== 'undefined' && mainRef.current && !isDarkMode) {
+      // Temporarily disabled Vanta.js due to compatibility issues
+      // TODO: Find alternative background solution or fix Vanta integration
+      console.log('Vanta.js temporarily disabled - using fallback background');
+      
+      // Set a simple gradient background as fallback
+      if (mainRef.current) {
+        mainRef.current.style.background = 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)';
+      }
+      
+      /* Original Vanta code - commented out for now
       // First, ensure THREE is available globally
       import('three').then((THREEModule) => {
         window.THREE = THREEModule;
@@ -161,6 +171,7 @@ export default function Home() {
       }).catch((error) => {
         console.error('Error loading THREE:', error);
       });
+      */
     }
     return () => {
       isMounted = false;
