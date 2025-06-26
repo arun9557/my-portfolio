@@ -274,7 +274,7 @@ export default function Home() {
         }
         .dark {
           background-color: #1A202C;
-          color: #D1D5DB;
+          color:rgb(46, 83, 138);
         }
         .light {
           background-color: #F5F7FA;
@@ -391,7 +391,7 @@ export default function Home() {
           left: 0;
           width: 100%;
           height: 100vh;
-          background: #1A202C !important;
+          background: #ffffff !important;
           z-index: 2000;
           perspective: 1000px;
         }
