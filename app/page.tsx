@@ -506,6 +506,23 @@ export default function Home() {
             >
               <TypingText text=" $HEKHAR" />
             </motion.span>
+            <motion.span
+              className="name-gradient ml-2"
+              variants={childVariants(5)}
+              animate={{
+                rotate: [0, 10, -10, 0],
+                scale: [1, 1.2, 1],
+                y: [0, -8, 0],
+                x: [0, 4, -4, 0],
+              }}
+              transition={{
+                repeat: Infinity,
+                duration: 2,
+                ease: "easeInOut",
+              }}
+            >
+              🚀
+            </motion.span>
           </motion.h1>
           <motion.button
             onClick={() => setIsDarkMode(!isDarkMode)}
@@ -612,9 +629,9 @@ export default function Home() {
 
       <motion.section
         className="theme-box max-w-5xl mx-auto mt-16 px-8 rounded-xl p-10 shadow-2xl border border-white/10 backdrop-blur-md"
-        initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
+        initial={{ opacity: 0, y: 60, scale: 0.95 }}
+        whileInView={{ opacity: 1, y: 0, scale: 1 }}
+        transition={{ duration: 0.8, type: "spring", bounce: 0.3 }}
         viewport={{ once: true }}
       >
         <h2
@@ -648,13 +665,20 @@ export default function Home() {
               className="tech-item"
               variants={techChildVariants}
               whileHover={{
-                scale: 1.05,
-                rotateX: 8,
-                rotateY: 8,
-                boxShadow: `0 8px 24px ${isDarkMode ? 'rgba(0, 188, 212, 0.4)' : 'rgba(45, 212, 191, 0.4)'}`,
+                scale: 1.09,
+                rotate: [0, 3, -3, 0],
+                boxShadow: `0 0 32px ${isDarkMode ? '#00BCD4' : '#764ba2'}`,
                 zIndex: 10,
               }}
-              transition={{ duration: 0.3, ease: 'easeOut' }}
+              animate={{
+                y: [0, -8, 0, 8, 0],
+              }}
+              transition={{
+                duration: 2.5,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: index * 0.18,
+              }}
             >
               <img src={`https://img.icons8.com/color/36/${logo}.png`} alt={`${name} logo`} className="tech-logo" />
               <span className="text-base font-inter">{name}</span>
@@ -672,9 +696,9 @@ export default function Home() {
       <motion.section
         id="projects"
         className="theme-box max-w-5xl mx-auto mt-16 px-8 rounded-xl p-10 shadow-2xl border border-white/10 backdrop-blur-md"
-        initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
+        initial={{ opacity: 0, y: 60, scale: 0.95 }}
+        whileInView={{ opacity: 1, y: 0, scale: 1 }}
+        transition={{ duration: 0.8, type: "spring", bounce: 0.3 }}
         viewport={{ once: true }}
       >
         <h2
@@ -685,49 +709,69 @@ export default function Home() {
         </h2>
         <h3 className="text-2xl mt-2 mb-8 font-inter font-semibold">Some Projects I've Built</h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-          <div className="rounded-xl p-6 shadow-lg border border-white/10 bg-white/5">
-            <h4 className="text-lg font-bold mb-2">IITCohort</h4>
-            <p className="text-sm mb-4">Smart Batch Collaboration Platform</p>
-            <div className="flex gap-4">
-              <a href="https://iitcohort.vercel.app/" target="_blank" rel="noopener noreferrer">
-                Live
-              </a>
-              <span className="text-gray-400">Code</span>
-            </div>
-          </div>
-          <div className="rounded-xl p-6 shadow-lg border border-white/10 bg-white/5">
-            <h4 className="text-lg font-bold mb-2">Portfolio Website</h4>
-            <p className="text-sm mb-4">React, Next.js, TailwindCSS, Framer Motion</p>
-            <div className="flex gap-4">
-              <a href="https://my-portfolio-kappa-five-34.vercel.app" target="_blank" rel="noopener noreferrer">
-                Live
-              </a>
-              <a
-                href="https://github.com/arun9557/my-portfolio"
-                target="_blank"
-                className="text-blue-400 underline"
-              >
-                Code
-              </a>
-            </div>
-          </div>
-          <div className="rounded-xl p-6 shadow-lg border border-white/10 bg-white/5">
-            <h4 className="text-lg font-bold mb-2">My Blog (Coming Soon)</h4>
-            <p className="text-sm mb-4">Next.js, Markdown, Content Layer</p>
-            <div className="flex gap-4">
-              <span className="text-gray-400">Live</span>
-              <span className="text-gray-400">Code</span>
-            </div>
-          </div>
+          {[
+            {
+              title: "IITCohort",
+              desc: "Smart Batch Collaboration Platform",
+              live: "https://iitcohort.vercel.app/",
+              code: null,
+            },
+            {
+              title: "Portfolio Website",
+              desc: "React, Next.js, TailwindCSS, Framer Motion",
+              live: "https://my-portfolio-kappa-five-34.vercel.app",
+              code: "https://github.com/arun9557/my-portfolio",
+            },
+            {
+              title: "My Blog (Coming Soon)",
+              desc: "Next.js, Markdown, Content Layer",
+              live: null,
+              code: null,
+            },
+          ].map((proj, idx) => (
+            <motion.div
+              key={proj.title}
+              className="rounded-xl p-6 shadow-lg border border-white/10 bg-white/5"
+              whileHover={{
+                scale: 1.07,
+                rotate: [0, 2, -2, 0],
+                boxShadow: `0 0 32px ${isDarkMode ? '#00BCD4' : '#764ba2'}`,
+                zIndex: 10,
+              }}
+              animate={{
+                y: [0, -8, 0, 8, 0],
+              }}
+              transition={{
+                duration: 2.5,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+            >
+              <h4 className="text-lg font-bold mb-2">{proj.title}</h4>
+              <p className="text-sm mb-4">{proj.desc}</p>
+              <div className="flex gap-4">
+                {proj.live ? (
+                  <a href={proj.live} target="_blank" rel="noopener noreferrer">Live</a>
+                ) : (
+                  <span className="text-gray-400">Live</span>
+                )}
+                {proj.code ? (
+                  <a href={proj.code} target="_blank" className="text-blue-400 underline">Code</a>
+                ) : (
+                  <span className="text-gray-400">Code</span>
+                )}
+              </div>
+            </motion.div>
+          ))}
         </div>
       </motion.section>
 
       <motion.section
         id="contact"
         className="theme-box max-w-5xl mx-auto mt-16 px-8 rounded-xl p-10 shadow-2xl border border-white/10 backdrop-blur-md"
-        initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
+        initial={{ opacity: 0, y: 60, scale: 0.95 }}
+        whileInView={{ opacity: 1, y: 0, scale: 1 }}
+        transition={{ duration: 0.8, type: "spring", bounce: 0.3 }}
         viewport={{ once: true }}
       >
         <div className="flex flex-col md:flex-row gap-8">
