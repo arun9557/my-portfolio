@@ -686,6 +686,16 @@ export default function Home() {
         <h3 className="text-2xl mt-2 mb-8 font-inter font-semibold">Some Projects I've Built</h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
           <div className="rounded-xl p-6 shadow-lg border border-white/10 bg-white/5">
+            <h4 className="text-lg font-bold mb-2">IITCohort</h4>
+            <p className="text-sm mb-4">Smart Batch Collaboration Platform</p>
+            <div className="flex gap-4">
+              <a href="https://iitcohort.vercel.app/" target="_blank" rel="noopener noreferrer">
+                Live
+              </a>
+              <span className="text-gray-400">Code</span>
+            </div>
+          </div>
+          <div className="rounded-xl p-6 shadow-lg border border-white/10 bg-white/5">
             <h4 className="text-lg font-bold mb-2">Portfolio Website</h4>
             <p className="text-sm mb-4">React, Next.js, TailwindCSS, Framer Motion</p>
             <div className="flex gap-4">
@@ -707,6 +717,46 @@ export default function Home() {
             <div className="flex gap-4">
               <span className="text-gray-400">Live</span>
               <span className="text-gray-400">Code</span>
+            </div>
+          </div>
+        </div>
+      </motion.section>
+
+      <motion.section
+        id="contact"
+        className="theme-box max-w-5xl mx-auto mt-16 px-8 rounded-xl p-10 shadow-2xl border border-white/10 backdrop-blur-md"
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        viewport={{ once: true }}
+      >
+        <div className="flex flex-col md:flex-row gap-8">
+          <form className="flex-1 rounded-lg p-6" style={{ minWidth: '280px', background: isDarkMode ? '#1F2A44' : '#FFFFFF', color: isDarkMode ? '#D1D5DB' : '#1F2937' }}>
+            <div className="mb-4">
+              <label className="block text-sm font-bold mb-1" htmlFor="name">Name</label>
+              <input className="w-full border-b border-gray-400 bg-transparent outline-none py-2 mb-2" id="name" name="name" type="text" placeholder="Enter your Name" />
+            </div>
+            <div className="mb-4">
+              <label className="block text-sm font-bold mb-1" htmlFor="email">Email</label>
+              <input className="w-full border-b border-gray-400 bg-transparent outline-none py-2 mb-2" id="email" name="email" type="email" placeholder="Enter a valid email address" />
+            </div>
+            <div className="mb-4">
+              <label className="block text-sm font-bold mb-1" htmlFor="phone">Phone</label>
+              <input className="w-full border-b border-gray-400 bg-transparent outline-none py-2 mb-2" id="phone" name="phone" type="tel" placeholder="Enter your phone (e.g. +14155552675)" />
+            </div>
+            <div className="mb-6">
+              <label className="block text-sm font-bold mb-1" htmlFor="message">Message</label>
+              <textarea className="w-full border-b border-gray-400 bg-transparent outline-none py-2 mb-2 resize-none" id="message" name="message" placeholder="Enter your message" rows={3}></textarea>
+            </div>
+            <button type="submit" className="bg-gradient-to-r from-[#667eea] to-[#764ba2] text-white px-6 py-2 rounded-full font-bold mt-2">SUBMIT</button>
+          </form>
+          <div className="flex-1 flex flex-col items-center justify-center">
+            <h3 className="text-2xl font-inter font-semibold mb-6">Follow us</h3>
+            <div className="flex flex-col gap-4 w-full max-w-xs">
+              <a href="https://www.linkedin.com/in/arun-shekar-209483364" target="_blank" rel="noopener noreferrer" className="w-full py-2 rounded-full text-white font-bold text-center bg-gradient-to-r from-[#667eea] to-[#764ba2]">LINKEDIN</a>
+              <a href="#" className="w-full py-2 rounded-full text-white font-bold text-center bg-gradient-to-r from-[#667eea] to-[#764ba2]">YOUTUBE</a>
+              <a href="https://x.com/ArunShekha_?t=gsrx3cvBePkqSbZLeai8EQ&s=08" target="_blank" rel="noopener noreferrer" className="w-full py-2 rounded-full text-white font-bold text-center bg-gradient-to-r from-[#667eea] to-[#764ba2]">X</a>
+              <a href="https://www.instagram.com/arunshekhar.in/" target="_blank" rel="noopener noreferrer" className="w-full py-2 rounded-full text-white font-bold text-center bg-gradient-to-r from-[#667eea] to-[#764ba2]">INSTAGRAM</a>
             </div>
           </div>
         </div>
