@@ -693,6 +693,130 @@ export default function Home() {
         </p>
       </motion.section>
 
+      {/* Skills Section */}
+      <motion.section
+        className="relative max-w-6xl mx-auto mt-24 px-4 sm:px-6"
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+        viewport={{ once: true, margin: "-100px" }}
+      >
+        {/* Decorative elements */}
+        <div className="absolute -top-12 -left-12 w-24 h-24 bg-gradient-to-br from-blue-500 to-cyan-400 rounded-full filter blur-3xl opacity-20" />
+        <div className="absolute -bottom-12 -right-12 w-32 h-32 bg-gradient-to-tr from-purple-500 to-pink-500 rounded-full filter blur-3xl opacity-20" />
+        
+        <div className="relative">
+          <div className="text-center mb-12">
+            <motion.span 
+              className="inline-block px-3 py-1 text-xs font-medium rounded-full mb-4"
+              style={{
+                background: isDarkMode ? 'rgba(0, 188, 212, 0.1)' : 'rgba(45, 212, 191, 0.1)',
+                color: isDarkMode ? '#00BCD4' : '#2DD4BF',
+                border: `1px solid ${isDarkMode ? 'rgba(0, 188, 212, 0.2)' : 'rgba(45, 212, 191, 0.2)'}`
+              }}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              viewport={{ once: true }}
+            >
+              MY EXPERTISE
+            </motion.span>
+            <motion.h2 
+              className="text-3xl sm:text-4xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-cyan-400"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+              viewport={{ once: true }}
+            >
+              Skills & Technologies
+            </motion.h2>
+            <motion.p 
+              className="max-w-2xl mx-auto text-gray-400"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 }}
+              viewport={{ once: true }}
+            >
+              Here are the technologies and tools I work with to create amazing digital experiences
+            </motion.p>
+          </div>
+
+          {/* Tabs */}
+          <div className="flex flex-wrap justify-center gap-2 mb-12">
+            {['All', 'Frontend', 'Backend', 'Tools'].map((tab, index) => (
+              <motion.button
+                key={tab}
+                className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+                  (tab === 'All') 
+                    ? 'bg-gradient-to-r from-blue-500 to-cyan-500 text-white shadow-lg shadow-blue-500/20' 
+                    : isDarkMode 
+                      ? 'text-gray-300 hover:bg-gray-800' 
+                      : 'text-gray-600 hover:bg-gray-100'
+                }`}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1 * index }}
+                viewport={{ once: true }}
+              >
+                {tab}
+              </motion.button>
+            ))}
+          </div>
+
+          {/* Skills Grid */}
+          <motion.div 
+            className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            viewport={{ once: true }}
+          >
+            {skillsData.map((skill, index) => (
+              <motion.div
+                key={skill.label}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1 * (index % 5) }}
+                viewport={{ once: true, margin: "-50px" }}
+              >
+                <Tool 
+                  icon={skill.icon} 
+                  label={skill.label} 
+                  isDarkMode={isDarkMode} 
+                />
+              </motion.div>
+            ))}
+          </motion.div>
+
+          {/* Experience Bar */}
+          <motion.div 
+            className="mt-16 bg-gradient-to-r from-blue-500/10 via-cyan-500/10 to-transparent p-6 rounded-2xl border border-white/5 backdrop-blur-sm"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4 }}
+            viewport={{ once: true }}
+          >
+            <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
+              <div>
+                <h3 className="text-xl font-bold mb-2">Continuous Learning</h3>
+                <p className="text-gray-400 text-sm">Always expanding my skills with new technologies</p>
+              </div>
+              <button 
+                className="px-6 py-3 bg-gradient-to-r from-blue-500 to-cyan-500 text-white rounded-full font-medium hover:opacity-90 transition-all duration-300 flex items-center gap-2 group"
+                onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+              >
+                Let's Work Together
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+              </button>
+            </div>
+          </motion.div>
+        </div>
+      </motion.section>
+
       <motion.section
         id="projects"
         className="theme-box max-w-5xl mx-auto mt-16 px-8 rounded-xl p-10 shadow-2xl border border-white/10 backdrop-blur-md"
@@ -815,24 +939,75 @@ interface ToolProps {
   isDarkMode: boolean;
 }
 
+interface Skill {
+  icon: string;
+  label: string;
+  category: 'frontend' | 'backend' | 'tools';
+}
+
+const skillsData: Skill[] = [
+  // Frontend
+  { icon: 'typescript', label: 'TypeScript', category: 'frontend' },
+  { icon: 'react', label: 'React', category: 'frontend' },
+  { icon: 'next-js', label: 'Next.js', category: 'frontend' },
+  { icon: 'tailwindcss', label: 'Tailwind CSS', category: 'frontend' },
+  { icon: 'sass', label: 'Sass', category: 'frontend' },
+  { icon: 'graphql', label: 'GraphQL', category: 'frontend' },
+  
+  // Backend
+  { icon: 'node-js', label: 'Node.js', category: 'backend' },
+  { icon: 'express', label: 'Express', category: 'backend' },
+  { icon: 'mongodb', label: 'MongoDB', category: 'backend' },
+  { icon: 'postgresql', label: 'PostgreSQL', category: 'backend' },
+  { icon: 'firebase', label: 'Firebase', category: 'backend' },
+  
+  // Tools
+  { icon: 'git', label: 'Git', category: 'tools' },
+  { icon: 'github', label: 'GitHub', category: 'tools' },
+  { icon: 'docker', label: 'Docker', category: 'tools' },
+  { icon: 'visual-studio-code', label: 'VS Code', category: 'tools' },
+  { icon: 'figma', label: 'Figma', category: 'tools' },
+];
+
 function Tool({ icon, label, isDarkMode }: ToolProps) {
   return (
     <motion.div
-      whileHover={{
-        scale: 1.1,
-        rotateX: 5,
-        rotateY: 5,
-        boxShadow: '0px 10px 20px rgba(0, 0, 0, 0.2)',
-      }}
-      className="rounded-xl p-4 transition duration-300 hover:shadow-lg hover:ring-2"
-      style={{
-        background: isDarkMode ? '#1F2A44' : '#FFFFFF',
-        color: isDarkMode ? '#D1D5DB' : '#1F2937',
-        border: `1px solid ${isDarkMode ? 'rgba(0, 188, 212, 0.2)' : 'rgba(45, 212, 191, 0.2)'}`,
+      className="relative group h-full"
+      whileHover={{ 
+        y: -5,
+        transition: { duration: 0.2 }
       }}
     >
-      <img src={`https://img.icons8.com/color/48/${icon}.png`} alt={label} className="mx-auto mb-2" />
-      <p className="text-xs font-inter">{label}</p>
+      <div className="absolute inset-0.5 bg-gradient-to-r from-blue-500 to-cyan-400 rounded-xl opacity-0 group-hover:opacity-100 blur transition duration-500 group-hover:duration-200" />
+      <motion.div
+        className="relative h-full flex flex-col items-center justify-center p-5 rounded-xl transition-all duration-300 overflow-hidden"
+        style={{
+          background: isDarkMode ? 'rgba(31, 41, 55, 0.8)' : 'rgba(255, 255, 255, 0.8)',
+          backdropFilter: 'blur(10px)',
+          border: `1px solid ${isDarkMode ? 'rgba(0, 188, 212, 0.1)' : 'rgba(45, 212, 191, 0.1)'}`,
+        }}
+        whileHover={{
+          borderColor: isDarkMode ? 'rgba(0, 188, 212, 0.5)' : 'rgba(45, 212, 191, 0.5)',
+          boxShadow: isDarkMode 
+            ? '0 8px 32px rgba(0, 188, 212, 0.1)' 
+            : '0 8px 32px rgba(45, 212, 191, 0.1)',
+        }}
+      >
+        <div className="relative z-10 flex flex-col items-center">
+          <div className="w-12 h-12 flex items-center justify-center mb-3">
+            <img 
+              src={`https://img.icons8.com/color/96/${icon}.png`} 
+              alt={label} 
+              className="w-10 h-10 object-contain transition-transform duration-300 group-hover:scale-110"
+            />
+          </div>
+          <p className="text-sm font-medium text-center">{label}</p>
+        </div>
+        <div 
+          className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+          aria-hidden="true"
+        />
+      </motion.div>
     </motion.div>
   );
 }
