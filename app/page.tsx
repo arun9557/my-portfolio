@@ -74,7 +74,6 @@ const skillsData: Skill[] = [
   { icon: 'github', label: 'GitHub', category: 'tools' },
   { icon: 'visual-studio-code', label: 'VS Code', category: 'tools' },
   { icon: 'figma', label: 'Figma', category: 'tools' },
-  { icon: 'adobe-photoshop', label: 'Photoshop', category: 'tools' },
 ];
 
 const projects: Project[] = [
@@ -1028,16 +1027,27 @@ export default function Home() {
 
       <motion.section
         id="projects"
-        className="relative max-w-6xl mx-auto mt-24 px-4 sm:px-6"
+        className="relative max-w-7xl mx-auto mt-32 px-4 sm:px-6"
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
         viewport={{ once: true, margin: "-100px" }}
       >
         <div className="relative">
-          <div className="text-center mb-12">
+          <div className="text-center mb-16">
+            <motion.div 
+              className="inline-block mb-4"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              viewport={{ once: true }}
+            >
+              <span className="px-4 py-1 text-sm font-medium rounded-full bg-gradient-to-r from-blue-500/10 to-cyan-500/10 text-blue-400 border border-blue-500/20">
+                My Work
+              </span>
+            </motion.div>
             <motion.h2 
-              className="text-3xl sm:text-4xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-cyan-400"
+              className="text-4xl sm:text-5xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-500"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
@@ -1046,74 +1056,85 @@ export default function Home() {
               Featured Projects
             </motion.h2>
             <motion.p 
-              className="max-w-2xl mx-auto text-gray-400"
+              className="max-w-2xl mx-auto text-lg text-gray-400"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
               viewport={{ once: true }}
             >
-              Here are some of my recent projects. Each one was built to solve a specific problem or explore new technologies.
+              Here's a showcase of my recent work. Each project represents a unique challenge and solution.
             </motion.p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
             {projects.map((project, index) => (
               <motion.article
                 key={`${project.title}-${index}`}
                 initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                whileHover={{ y: -8 }}
-                transition={{ 
-                  duration: 0.4, 
-                  delay: index * 0.1,
-                  type: 'spring',
-                  stiffness: 100
+                whileInView={{ 
+                  opacity: 1, 
+                  y: 0,
+                  transition: { 
+                    duration: 0.6, 
+                    delay: index * 0.15,
+                    ease: [0.16, 1, 0.3, 1]
+                  }
+                }}
+                whileHover={{ 
+                  y: -8,
+                  transition: { 
+                    duration: 0.4,
+                    ease: [0.4, 0, 0.2, 1]
+                  }
                 }}
                 viewport={{ once: true, margin: "-50px" }}
-                className="group relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-gray-900/50 to-gray-800/50 backdrop-blur-sm shadow-xl hover:shadow-2xl hover:shadow-blue-500/20 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-900"
+                className="group relative overflow-hidden rounded-2xl border border-white/5 bg-gradient-to-br from-gray-900/70 to-gray-800/50 backdrop-blur-lg shadow-2xl hover:shadow-blue-500/10 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:ring-offset-2 focus:ring-offset-gray-900 transition-all duration-300"
                 tabIndex={0}
                 aria-label={`Project: ${project.title}`}
               >
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-cyan-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="absolute inset-0.5 rounded-2xl bg-gradient-to-br from-blue-500/5 to-cyan-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 <ProjectCard project={project} isDarkMode={isDarkMode} />
               </motion.article>
             ))}
           </div>
           
           <motion.div 
-            className="mt-12 text-center"
+            className="mt-16 text-center"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
             viewport={{ once: true }}
           >
-            <a
+            <motion.a
               href="https://github.com/arun9557"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center px-6 py-3 rounded-full font-medium transition-all duration-300 text-sm sm:text-base"
-              style={{
-                background: isDarkMode 
-                  ? 'linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%)' 
-                  : 'linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%)',
-                color: isDarkMode ? '#667eea' : '#764ba2',
-                border: `1px solid ${isDarkMode ? 'rgba(102, 126, 234, 0.2)' : 'rgba(118, 75, 162, 0.2)'}`
-              }}
+              className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full font-medium transition-all duration-300 text-sm sm:text-base group"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.background = isDarkMode 
-                  ? 'linear-gradient(135deg, rgba(102, 126, 234, 0.2) 0%, rgba(118, 75, 162, 0.2) 100%)'
-                  : 'linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%)';
+                  ? 'linear-gradient(135deg, rgba(99, 102, 241, 0.15) 0%, rgba(59, 130, 246, 0.15) 100%)' 
+                  : 'linear-gradient(135deg, rgba(99, 102, 241, 0.15) 0%, rgba(59, 130, 246, 0.15) 100%)';
+                e.currentTarget.style.boxShadow = isDarkMode 
+                  ? '0 6px 25px -3px rgba(99, 102, 241, 0.2)' 
+                  : '0 6px 25px -3px rgba(59, 130, 246, 0.2)';
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.background = isDarkMode 
-                  ? 'linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%)' 
-                  : 'linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%)';
+                  ? 'linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(59, 130, 246, 0.1) 100%)' 
+                  : 'linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(59, 130, 246, 0.1) 100%)';
+                e.currentTarget.style.boxShadow = isDarkMode 
+                  ? '0 4px 20px -5px rgba(99, 102, 241, 0.1)' 
+                  : '0 4px 20px -5px rgba(59, 130, 246, 0.1)';
               }}
             >
               View All Projects on GitHub
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 sm:h-5 sm:w-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-1 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
               </svg>
-            </a>
+            </motion.a>
           </motion.div>
         </div>
       </motion.section>
