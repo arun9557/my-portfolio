@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence, easeIn, easeOut } from 'framer-motion';
+import { motion, useAnimation, AnimatePresence, useMotionValue, useTransform, easeOut, easeIn } from 'framer-motion';
 import * as THREE from 'three';
 import dynamic from 'next/dynamic';
 import Particles from '@tsparticles/react';
@@ -103,6 +103,218 @@ const projects: Project[] = [
     isFeatured: false
   }
 ];
+
+interface ProjectCardProps {
+  project: {
+    title: string;
+    description: string;
+    tags: string[];
+    liveUrl?: string;
+    codeUrl?: string;
+    image: string;
+  };
+  isDarkMode: boolean;
+}
+
+const ProjectCard: React.FC<ProjectCardProps> = ({ project, isDarkMode }) => {
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+  
+  const rotateX = useTransform(y, [-100, 100], [5, -5]);
+  const rotateY = useTransform(x, [-100, 100], [-5, 5]);
+  
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const xPos = e.clientX - rect.left;
+    const yPos = e.clientY - rect.top;
+    
+    const xCenter = rect.width / 2;
+    const yCenter = rect.height / 2;
+    
+    x.set((xPos - xCenter) / 10);
+    y.set((yPos - yCenter) / 10);
+  };
+  
+  const handleMouseLeave = () => {
+    x.set(0);
+    y.set(0);
+  };
+
+  return (
+    <motion.div 
+      className="h-full w-full"
+      style={{
+        transformStyle: 'preserve-3d',
+        rotateX,
+        rotateY,
+        transition: 'transform 0.1s ease-out'
+      }}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+    >
+      <div className="relative h-48 overflow-hidden">
+        {/* Project Image with Gradient Overlay */}
+        <div 
+          className="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-cyan-500/20 z-10 opacity-0 group-hover:opacity-100 group-focus:opacity-100 transition-opacity duration-300"
+          aria-hidden="true"
+        />
+        
+        {/* Project Image */}
+        <img
+          src={project.image}
+          alt={`Screenshot of ${project.title} project`}
+          className="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110 group-focus:scale-110"
+          loading="lazy"
+          width={600}
+          height={300}
+          onError={(e) => {
+            const target = e.target as HTMLImageElement;
+            target.src = '/images/projects/placeholder.png';
+          }}
+        />
+        
+        {/* Project Title Overlay */}
+        <div 
+          className="absolute inset-0 flex items-end p-6 bg-gradient-to-t from-black/90 via-black/30 to-transparent"
+          aria-hidden="true"
+        >
+          <h3 className="text-xl font-bold text-white">
+            <span className="sr-only">Project: </span>
+            {project.title}
+          </h3>
+        </div>
+      </div>
+
+      <div className="p-6">
+        <p className="text-gray-300 mb-4 line-clamp-2">{project.description}</p>
+        
+        {/* Tags */}
+        <div className="flex flex-wrap gap-2 mb-6" role="list" aria-label="Technologies used">
+          {project.tags.map((tag) => (
+            <motion.span 
+              key={`${tag}-${project.title}`}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.98 }}
+              transition={{ type: 'spring', stiffness: 400, damping: 10 }}
+              className="px-3 py-1 text-xs font-medium rounded-full backdrop-blur-sm select-none"
+              style={{
+                background: 'rgba(0, 188, 212, 0.1)',
+                color: '#00BCD4',
+                border: '1px solid rgba(0, 188, 212, 0.2)'
+              }}
+              role="listitem"
+              aria-label={tag}
+            >
+              {tag}
+            </motion.span>
+          ))}
+        </div>
+
+        {/* Action Buttons */}
+        <div className="flex gap-3">
+          {project.liveUrl && (
+            <motion.a
+              href={project.liveUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex-1 px-4 py-2.5 text-center rounded-lg font-medium flex items-center justify-center gap-2 group/button focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-blue-500"
+              style={{
+                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                color: 'white',
+              }}
+              aria-label={`View ${project.title} live demo (opens in new tab)`}
+              whileHover={{
+                y: -2,
+                boxShadow: '0 10px 20px -5px rgba(102, 126, 234, 0.5)',
+                transition: { type: 'spring', stiffness: 400, damping: 10 }
+              }}
+              whileTap={{ 
+                scale: 0.98,
+                boxShadow: '0 2px 10px -3px rgba(102, 126, 234, 0.5)'
+              }}
+            >
+              <svg 
+                xmlns="http://www.w3.org/2000/svg" 
+                className="h-4 w-4 group-hover/button:animate-pulse" 
+                fill="none" 
+                viewBox="0 0 24 24" 
+                stroke="currentColor"
+                aria-hidden="true"
+              >
+                <path 
+                  strokeLinecap="round" 
+                  strokeLinejoin="round" 
+                  strokeWidth={2} 
+                  d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" 
+                />
+              </svg>
+              Live Demo
+            </motion.a>
+          )}
+          {project.codeUrl ? (
+            <motion.a
+              href={project.codeUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex-1 px-4 py-2.5 text-center rounded-lg font-medium flex items-center justify-center gap-2 group/button border border-white/10"
+              style={{
+                background: 'rgba(255, 255, 255, 0.05)',
+                color: isDarkMode ? '#E5E7EB' : '#1F2937',
+              }}
+              whileHover={{
+                y: -2,
+                background: 'rgba(255, 255, 255, 0.1)',
+                borderColor: 'rgba(255, 255, 255, 0.2)',
+                transition: { type: 'spring', stiffness: 400, damping: 10 }
+              }}
+              whileTap={{ 
+                scale: 0.98,
+                background: 'rgba(255, 255, 255, 0.08)'
+              }}
+            >
+              <svg 
+                xmlns="http://www.w3.org/2000/svg" 
+                className="h-4 w-4" 
+                fill="none" 
+                viewBox="0 0 24 24" 
+                stroke="currentColor"
+                aria-hidden="true"
+              >
+                <path 
+                  strokeLinecap="round" 
+                  strokeLinejoin="round" 
+                  strokeWidth={2} 
+                  d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" 
+                />
+              </svg>
+              View Code
+            </motion.a>
+          ) : (
+            <button
+              disabled
+              className="flex-1 px-4 py-2 text-center rounded-lg font-medium opacity-50 cursor-not-allowed flex items-center justify-center gap-2 border border-gray-300 dark:border-gray-600"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+              </svg>
+              Private Code
+            </button>
+          )}
+        </div>
+
+        {/* Glow Effect */}
+        <div className="absolute inset-0 overflow-hidden rounded-2xl pointer-events-none">
+          <div className="absolute -inset-1 bg-gradient-to-r from-blue-500/20 to-cyan-500/20 opacity-0 group-hover:opacity-100 blur-xl transition-all duration-700 group-hover:duration-200" />
+        </div>
+        
+        {/* Subtle Grid Pattern */}
+        <div className="absolute inset-0 opacity-10 [mask-image:linear-gradient(180deg,white,transparent)] pointer-events-none">
+          <div className="absolute inset-0 [background-image:linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[length:24px_24px]" />
+        </div>
+      </div>
+    </motion.div>
+  );
+};
 
 export default function Home() {
   const [isDarkMode, setIsDarkMode] = useState(true);
@@ -819,7 +1031,7 @@ export default function Home() {
         className="relative max-w-6xl mx-auto mt-24 px-4 sm:px-6"
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
+        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
         viewport={{ once: true, margin: "-100px" }}
       >
         <div className="relative">
@@ -850,7 +1062,7 @@ export default function Home() {
                 key={`${project.title}-${index}`}
                 initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                whileHover={{ y: -5 }}
+                whileHover={{ y: -8 }}
                 transition={{ 
                   duration: 0.4, 
                   delay: index * 0.1,
@@ -858,133 +1070,15 @@ export default function Home() {
                   stiffness: 100
                 }}
                 viewport={{ once: true, margin: "-50px" }}
-                className="group relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-gray-900/50 to-gray-800/50 backdrop-blur-sm shadow-xl transition-all duration-300 hover:shadow-2xl hover:shadow-blue-500/20 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-900"
+                className="group relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-gray-900/50 to-gray-800/50 backdrop-blur-sm shadow-xl hover:shadow-2xl hover:shadow-blue-500/20 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-900"
                 tabIndex={0}
                 aria-label={`Project: ${project.title}`}
               >
-                <div className="relative h-48 overflow-hidden">
-                  {/* Project Image with Gradient Overlay */}
-                  <div 
-                    className="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-cyan-500/20 z-10 opacity-0 group-hover:opacity-100 group-focus:opacity-100 transition-opacity duration-300"
-                    aria-hidden="true"
-                  />
-                  
-                  {/* Project Image */}
-                  <img
-                    src={project.image}
-                    alt={`Screenshot of ${project.title} project`}
-                    className="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110 group-focus:scale-110"
-                    loading="lazy"
-                    width={600}
-                    height={300}
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.src = '/images/projects/placeholder.png';
-                    }}
-                  />
-                  
-                  {/* Project Title Overlay */}
-                  <div 
-                    className="absolute inset-0 flex items-end p-6 bg-gradient-to-t from-black/90 via-black/30 to-transparent"
-                    aria-hidden="true"
-                  >
-                    <h3 className="text-xl font-bold text-white">
-                      <span className="sr-only">Project: </span>
-                      {project.title}
-                    </h3>
-                  </div>
-                </div>
-
-                <div className="p-6">
-                  <p className="text-gray-300 mb-4 line-clamp-2">{project.description}</p>
-                  
-                  {/* Tags */}
-                  <div className="flex flex-wrap gap-2 mb-6" role="list" aria-label="Technologies used">
-                    {project.tags.map((tag) => (
-                      <motion.span 
-                        key={`${tag}-${project.title}`}
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.98 }}
-                        transition={{ type: 'spring', stiffness: 400, damping: 10 }}
-                        className="px-3 py-1 text-xs font-medium rounded-full backdrop-blur-sm select-none"
-                        style={{
-                          background: 'rgba(0, 188, 212, 0.1)',
-                          color: '#00BCD4',
-                          border: '1px solid rgba(0, 188, 212, 0.2)'
-                        }}
-                        role="listitem"
-                        aria-label={tag}
-                      >
-                        {tag}
-                      </motion.span>
-                    ))}
-                  </div>
-
-                  {/* Action Buttons */}
-                  <div className="flex gap-3">
-                    {project.liveUrl && (
-                      <a
-                        href={project.liveUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex-1 px-4 py-2 text-center rounded-lg font-medium transition-all duration-300 flex items-center justify-center gap-2 group/button focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-blue-500"
-                        style={{
-                          background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                          color: 'white',
-                        }}
-                        aria-label={`View ${project.title} live demo (opens in new tab)`}
-                        onMouseEnter={(e) => {
-                          e.currentTarget.style.transform = 'translateY(-2px)';
-                          e.currentTarget.style.boxShadow = '0 10px 20px -5px rgba(102, 126, 234, 0.5)';
-                        }}
-                        onMouseLeave={(e) => {
-                          e.currentTarget.style.transform = 'translateY(0)';
-                          e.currentTarget.style.boxShadow = 'none';
-                        }}
-                      >
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                        </svg>
-                        Live Demo
-                      </a>
-                    )}
-                    
-                    {project.codeUrl ? (
-                      <a
-                        href={project.codeUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex-1 px-4 py-2 text-center rounded-lg font-medium transition-all duration-300 flex items-center justify-center gap-2 border border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-800"
-                        onMouseEnter={(e) => {
-                          e.currentTarget.style.transform = 'translateY(-2px)';
-                        }}
-                        onMouseLeave={(e) => {
-                          e.currentTarget.style.transform = 'translateY(0)';
-                        }}
-                      >
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
-                        </svg>
-                        View Code
-                      </a>
-                    ) : (
-                      <button
-                        disabled
-                        className="flex-1 px-4 py-2 text-center rounded-lg font-medium opacity-50 cursor-not-allowed flex items-center justify-center gap-2 border border-gray-300 dark:border-gray-600"
-                      >
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                        </svg>
-                        Private Code
-                      </button>
-                    )}
-                  </div>
-                </div>
+                <ProjectCard project={project} isDarkMode={isDarkMode} />
               </motion.article>
             ))}
           </div>
-
-          {/* View More Button */}
+          
           <motion.div 
             className="mt-12 text-center"
             initial={{ opacity: 0, y: 20 }}
@@ -996,7 +1090,7 @@ export default function Home() {
               href="https://github.com/arun9557"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center px-6 py-3 rounded-full font-medium transition-all duration-300"
+              className="inline-flex items-center px-6 py-3 rounded-full font-medium transition-all duration-300 text-sm sm:text-base"
               style={{
                 background: isDarkMode 
                   ? 'linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%)' 
@@ -1016,7 +1110,7 @@ export default function Home() {
               }}
             >
               View All Projects on GitHub
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 sm:h-5 sm:w-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
               </svg>
             </a>
