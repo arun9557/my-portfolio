@@ -31,6 +31,79 @@ interface VantaSettings {
   backgroundColor?: number | string;
 }
 
+interface ToolProps {
+  icon: string;
+  label: string;
+  isDarkMode: boolean;
+}
+
+interface Skill {
+  icon: string;
+  label: string;
+  category: 'frontend' | 'backend' | 'tools';
+}
+
+interface Project {
+  title: string;
+  description: string;
+  tags: string[];
+  image: string;
+  liveUrl?: string;
+  codeUrl?: string;
+  isFeatured?: boolean;
+}
+
+const skillsData: Skill[] = [
+  // Frontend
+  { icon: 'typescript', label: 'TypeScript', category: 'frontend' },
+  { icon: 'react', label: 'React', category: 'frontend' },
+  { icon: 'next-js', label: 'Next.js', category: 'frontend' },
+  { icon: 'tailwindcss', label: 'Tailwind CSS', category: 'frontend' },
+  { icon: 'sass', label: 'Sass', category: 'frontend' },
+  { icon: 'graphql', label: 'GraphQL', category: 'frontend' },
+  
+  // Backend
+  { icon: 'node-js', label: 'Node.js', category: 'backend' },
+  { icon: 'express', label: 'Express', category: 'backend' },
+  { icon: 'mongodb', label: 'MongoDB', category: 'backend' },
+  { icon: 'postgresql', label: 'PostgreSQL', category: 'backend' },
+  { icon: 'firebase', label: 'Firebase', category: 'backend' },
+  
+  // Tools
+  { icon: 'git', label: 'Git', category: 'tools' },
+  { icon: 'github', label: 'GitHub', category: 'tools' },
+  { icon: 'visual-studio-code', label: 'VS Code', category: 'tools' },
+  { icon: 'figma', label: 'Figma', category: 'tools' },
+  { icon: 'adobe-photoshop', label: 'Photoshop', category: 'tools' },
+];
+
+const projects: Project[] = [
+  {
+    title: "IITCohort",
+    description: "Smart Batch Collaboration Platform for IIT students to connect, collaborate, and grow together in their academic and professional journeys.",
+    tags: ["Next.js", "TypeScript", "Tailwind CSS", "MongoDB", "Node.js"],
+    image: "/images/projects/iitcohort.png",
+    liveUrl: "https://iitcohort.vercel.app/",
+    isFeatured: true
+  },
+  {
+    title: "Portfolio Website",
+    description: "A modern, responsive portfolio website built with Next.js and Framer Motion, showcasing my projects and skills with smooth animations.",
+    tags: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Framer Motion"],
+    image: "/images/projects/portfolio.png",
+    liveUrl: "https://my-portfolio-kappa-five-34.vercel.app",
+    codeUrl: "https://github.com/arun9557/my-portfolio",
+    isFeatured: true
+  },
+  {
+    title: "My Blog",
+    description: "A personal blog platform built with Next.js and Markdown, featuring code syntax highlighting and responsive design.",
+    tags: ["Next.js", "Markdown", "Content Layer", "Tailwind CSS"],
+    image: "/images/projects/blog.png",
+    isFeatured: false
+  }
+];
+
 export default function Home() {
   const [isDarkMode, setIsDarkMode] = useState(true);
   const [scrolled, setScrolled] = useState(false);
@@ -701,26 +774,8 @@ export default function Home() {
         transition={{ duration: 0.6, ease: "easeOut" }}
         viewport={{ once: true, margin: "-100px" }}
       >
-        {/* Decorative elements */}
-        <div className="absolute -top-12 -left-12 w-24 h-24 bg-gradient-to-br from-blue-500 to-cyan-400 rounded-full filter blur-3xl opacity-20" />
-        <div className="absolute -bottom-12 -right-12 w-32 h-32 bg-gradient-to-tr from-purple-500 to-pink-500 rounded-full filter blur-3xl opacity-20" />
-        
         <div className="relative">
           <div className="text-center mb-12">
-            <motion.span 
-              className="inline-block px-3 py-1 text-xs font-medium rounded-full mb-4"
-              style={{
-                background: isDarkMode ? 'rgba(0, 188, 212, 0.1)' : 'rgba(45, 212, 191, 0.1)',
-                color: isDarkMode ? '#00BCD4' : '#2DD4BF',
-                border: `1px solid ${isDarkMode ? 'rgba(0, 188, 212, 0.2)' : 'rgba(45, 212, 191, 0.2)'}`
-              }}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              viewport={{ once: true }}
-            >
-              MY EXPERTISE
-            </motion.span>
             <motion.h2 
               className="text-3xl sm:text-4xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-cyan-400"
               initial={{ opacity: 0, y: 20 }}
@@ -730,39 +785,6 @@ export default function Home() {
             >
               Skills & Technologies
             </motion.h2>
-            <motion.p 
-              className="max-w-2xl mx-auto text-gray-400"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4 }}
-              viewport={{ once: true }}
-            >
-              Here are the technologies and tools I work with to create amazing digital experiences
-            </motion.p>
-          </div>
-
-          {/* Tabs */}
-          <div className="flex flex-wrap justify-center gap-2 mb-12">
-            {['All', 'Frontend', 'Backend', 'Tools'].map((tab, index) => (
-              <motion.button
-                key={tab}
-                className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
-                  (tab === 'All') 
-                    ? 'bg-gradient-to-r from-blue-500 to-cyan-500 text-white shadow-lg shadow-blue-500/20' 
-                    : isDarkMode 
-                      ? 'text-gray-300 hover:bg-gray-800' 
-                      : 'text-gray-600 hover:bg-gray-100'
-                }`}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.1 * index }}
-                viewport={{ once: true }}
-              >
-                {tab}
-              </motion.button>
-            ))}
           </div>
 
           {/* Skills Grid */}
@@ -789,104 +811,216 @@ export default function Home() {
               </motion.div>
             ))}
           </motion.div>
-
-          {/* Experience Bar */}
-          <motion.div 
-            className="mt-16 bg-gradient-to-r from-blue-500/10 via-cyan-500/10 to-transparent p-6 rounded-2xl border border-white/5 backdrop-blur-sm"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4 }}
-            viewport={{ once: true }}
-          >
-            <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
-              <div>
-                <h3 className="text-xl font-bold mb-2">Continuous Learning</h3>
-                <p className="text-gray-400 text-sm">Always expanding my skills with new technologies</p>
-              </div>
-              <button 
-                className="px-6 py-3 bg-gradient-to-r from-blue-500 to-cyan-500 text-white rounded-full font-medium hover:opacity-90 transition-all duration-300 flex items-center gap-2 group"
-                onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-              >
-                Let's Work Together
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                </svg>
-              </button>
-            </div>
-          </motion.div>
         </div>
       </motion.section>
 
       <motion.section
         id="projects"
-        className="theme-box max-w-5xl mx-auto mt-16 px-8 rounded-xl p-10 shadow-2xl border border-white/10 backdrop-blur-md"
-        initial={{ opacity: 0, y: 60, scale: 0.95 }}
-        whileInView={{ opacity: 1, y: 0, scale: 1 }}
-        transition={{ duration: 0.8, type: "spring", bounce: 0.3 }}
-        viewport={{ once: true }}
+        className="relative max-w-6xl mx-auto mt-24 px-4 sm:px-6"
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+        viewport={{ once: true, margin: "-100px" }}
       >
-        <h2
-          className="uppercase text-xs font-inter tracking-wide"
-          style={{ color: isDarkMode ? '#00BCD4' : '#2DD4BF' }}
-        >
-          Projects
-        </h2>
-        <h3 className="text-2xl mt-2 mb-8 font-inter font-semibold">Some Projects I've Built</h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-          {[
-            {
-              title: "IITCohort",
-              desc: "Smart Batch Collaboration Platform",
-              live: "https://iitcohort.vercel.app/",
-              code: null,
-            },
-            {
-              title: "Portfolio Website",
-              desc: "React, Next.js, TailwindCSS, Framer Motion",
-              live: "https://my-portfolio-kappa-five-34.vercel.app",
-              code: "https://github.com/arun9557/my-portfolio",
-            },
-            {
-              title: "My Blog (Coming Soon)",
-              desc: "Next.js, Markdown, Content Layer",
-              live: null,
-              code: null,
-            },
-          ].map((proj, idx) => (
-            <motion.div
-              key={proj.title}
-              className="rounded-xl p-6 shadow-lg border border-white/10 bg-white/5"
-              whileHover={{
-                scale: 1.07,
-                rotate: [0, 2, -2, 0],
-                boxShadow: `0 0 32px ${isDarkMode ? '#00BCD4' : '#764ba2'}`,
-                zIndex: 10,
+        <div className="relative">
+          <div className="text-center mb-12">
+            <motion.h2 
+              className="text-3xl sm:text-4xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-cyan-400"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+              viewport={{ once: true }}
+            >
+              Featured Projects
+            </motion.h2>
+            <motion.p 
+              className="max-w-2xl mx-auto text-gray-400"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 }}
+              viewport={{ once: true }}
+            >
+              Here are some of my recent projects. Each one was built to solve a specific problem or explore new technologies.
+            </motion.p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {projects.map((project, index) => (
+              <motion.article
+                key={`${project.title}-${index}`}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                whileHover={{ y: -5 }}
+                transition={{ 
+                  duration: 0.4, 
+                  delay: index * 0.1,
+                  type: 'spring',
+                  stiffness: 100
+                }}
+                viewport={{ once: true, margin: "-50px" }}
+                className="group relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-gray-900/50 to-gray-800/50 backdrop-blur-sm shadow-xl transition-all duration-300 hover:shadow-2xl hover:shadow-blue-500/20 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-900"
+                tabIndex={0}
+                aria-label={`Project: ${project.title}`}
+              >
+                <div className="relative h-48 overflow-hidden">
+                  {/* Project Image with Gradient Overlay */}
+                  <div 
+                    className="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-cyan-500/20 z-10 opacity-0 group-hover:opacity-100 group-focus:opacity-100 transition-opacity duration-300"
+                    aria-hidden="true"
+                  />
+                  
+                  {/* Project Image */}
+                  <img
+                    src={project.image}
+                    alt={`Screenshot of ${project.title} project`}
+                    className="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110 group-focus:scale-110"
+                    loading="lazy"
+                    width={600}
+                    height={300}
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.src = '/images/projects/placeholder.png';
+                    }}
+                  />
+                  
+                  {/* Project Title Overlay */}
+                  <div 
+                    className="absolute inset-0 flex items-end p-6 bg-gradient-to-t from-black/90 via-black/30 to-transparent"
+                    aria-hidden="true"
+                  >
+                    <h3 className="text-xl font-bold text-white">
+                      <span className="sr-only">Project: </span>
+                      {project.title}
+                    </h3>
+                  </div>
+                </div>
+
+                <div className="p-6">
+                  <p className="text-gray-300 mb-4 line-clamp-2">{project.description}</p>
+                  
+                  {/* Tags */}
+                  <div className="flex flex-wrap gap-2 mb-6" role="list" aria-label="Technologies used">
+                    {project.tags.map((tag) => (
+                      <motion.span 
+                        key={`${tag}-${project.title}`}
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.98 }}
+                        transition={{ type: 'spring', stiffness: 400, damping: 10 }}
+                        className="px-3 py-1 text-xs font-medium rounded-full backdrop-blur-sm select-none"
+                        style={{
+                          background: 'rgba(0, 188, 212, 0.1)',
+                          color: '#00BCD4',
+                          border: '1px solid rgba(0, 188, 212, 0.2)'
+                        }}
+                        role="listitem"
+                        aria-label={tag}
+                      >
+                        {tag}
+                      </motion.span>
+                    ))}
+                  </div>
+
+                  {/* Action Buttons */}
+                  <div className="flex gap-3">
+                    {project.liveUrl && (
+                      <a
+                        href={project.liveUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex-1 px-4 py-2 text-center rounded-lg font-medium transition-all duration-300 flex items-center justify-center gap-2 group/button focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-blue-500"
+                        style={{
+                          background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                          color: 'white',
+                        }}
+                        aria-label={`View ${project.title} live demo (opens in new tab)`}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.transform = 'translateY(-2px)';
+                          e.currentTarget.style.boxShadow = '0 10px 20px -5px rgba(102, 126, 234, 0.5)';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.transform = 'translateY(0)';
+                          e.currentTarget.style.boxShadow = 'none';
+                        }}
+                      >
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                        </svg>
+                        Live Demo
+                      </a>
+                    )}
+                    
+                    {project.codeUrl ? (
+                      <a
+                        href={project.codeUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex-1 px-4 py-2 text-center rounded-lg font-medium transition-all duration-300 flex items-center justify-center gap-2 border border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-800"
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.transform = 'translateY(-2px)';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.transform = 'translateY(0)';
+                        }}
+                      >
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                        </svg>
+                        View Code
+                      </a>
+                    ) : (
+                      <button
+                        disabled
+                        className="flex-1 px-4 py-2 text-center rounded-lg font-medium opacity-50 cursor-not-allowed flex items-center justify-center gap-2 border border-gray-300 dark:border-gray-600"
+                      >
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                        </svg>
+                        Private Code
+                      </button>
+                    )}
+                  </div>
+                </div>
+              </motion.article>
+            ))}
+          </div>
+
+          {/* View More Button */}
+          <motion.div 
+            className="mt-12 text-center"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4 }}
+            viewport={{ once: true }}
+          >
+            <a
+              href="https://github.com/arun9557"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center px-6 py-3 rounded-full font-medium transition-all duration-300"
+              style={{
+                background: isDarkMode 
+                  ? 'linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%)' 
+                  : 'linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%)',
+                color: isDarkMode ? '#667eea' : '#764ba2',
+                border: `1px solid ${isDarkMode ? 'rgba(102, 126, 234, 0.2)' : 'rgba(118, 75, 162, 0.2)'}`
               }}
-              animate={{
-                y: [0, -8, 0, 8, 0],
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = isDarkMode 
+                  ? 'linear-gradient(135deg, rgba(102, 126, 234, 0.2) 0%, rgba(118, 75, 162, 0.2) 100%)'
+                  : 'linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%)';
               }}
-              transition={{
-                duration: 2.5,
-                repeat: Infinity,
-                ease: "easeInOut",
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = isDarkMode 
+                  ? 'linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%)' 
+                  : 'linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%)';
               }}
             >
-              <h4 className="text-lg font-bold mb-2">{proj.title}</h4>
-              <p className="text-sm mb-4">{proj.desc}</p>
-              <div className="flex gap-4">
-                {proj.live ? (
-                  <a href={proj.live} target="_blank" rel="noopener noreferrer">Live</a>
-                ) : (
-                  <span className="text-gray-400">Live</span>
-                )}
-                {proj.code ? (
-                  <a href={proj.code} target="_blank" className="text-blue-400 underline">Code</a>
-                ) : (
-                  <span className="text-gray-400">Code</span>
-                )}
-              </div>
-            </motion.div>
-          ))}
+              View All Projects on GitHub
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+              </svg>
+            </a>
+          </motion.div>
         </div>
       </motion.section>
 
@@ -933,41 +1067,7 @@ export default function Home() {
   );
 }
 
-interface ToolProps {
-  icon: string;
-  label: string;
-  isDarkMode: boolean;
-}
 
-interface Skill {
-  icon: string;
-  label: string;
-  category: 'frontend' | 'backend' | 'tools';
-}
-
-const skillsData: Skill[] = [
-  // Frontend
-  { icon: 'typescript', label: 'TypeScript', category: 'frontend' },
-  { icon: 'react', label: 'React', category: 'frontend' },
-  { icon: 'next-js', label: 'Next.js', category: 'frontend' },
-  { icon: 'tailwindcss', label: 'Tailwind CSS', category: 'frontend' },
-  { icon: 'sass', label: 'Sass', category: 'frontend' },
-  { icon: 'graphql', label: 'GraphQL', category: 'frontend' },
-  
-  // Backend
-  { icon: 'node-js', label: 'Node.js', category: 'backend' },
-  { icon: 'express', label: 'Express', category: 'backend' },
-  { icon: 'mongodb', label: 'MongoDB', category: 'backend' },
-  { icon: 'postgresql', label: 'PostgreSQL', category: 'backend' },
-  { icon: 'firebase', label: 'Firebase', category: 'backend' },
-  
-  // Tools
-  { icon: 'git', label: 'Git', category: 'tools' },
-  { icon: 'github', label: 'GitHub', category: 'tools' },
-  { icon: 'docker', label: 'Docker', category: 'tools' },
-  { icon: 'visual-studio-code', label: 'VS Code', category: 'tools' },
-  { icon: 'figma', label: 'Figma', category: 'tools' },
-];
 
 function Tool({ icon, label, isDarkMode }: ToolProps) {
   return (
