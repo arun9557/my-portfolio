@@ -1,10 +1,8 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
-import { motion, useAnimation, AnimatePresence, useMotionValue, useTransform, easeOut, easeIn } from 'framer-motion';
+import { motion, AnimatePresence, useMotionValue, useTransform, easeOut, easeIn } from 'framer-motion';
 import * as THREE from 'three';
-import dynamic from 'next/dynamic';
-import Particles from '@tsparticles/react';
 
 // Define VantaEffect as any (or import from Vanta if available)
 type VantaEffect = any;
@@ -715,7 +713,7 @@ export default function Home() {
             <a href="#" className="hover:text-blue-400 transition">
               Home
             </a>
-            <a href="#projects" className="hover:text-blue-400 transition">
+            <a href="#future-projects" className="hover:text-blue-400 transition">
               Projects
             </a>
             <a href="#future-projects" className="hover:text-blue-400 transition">
@@ -747,7 +745,7 @@ export default function Home() {
             <a href="#" className="hover:text-blue-400 transition py-2 w-full text-center">
               Home
             </a>
-            <a href="#projects" className="hover:text-blue-400 transition py-2 w-full text-center">
+            <a href="#future-projects" className="hover:text-blue-400 transition py-2 w-full text-center">
               Projects
             </a>
             <a href="#future-projects" className="hover:text-blue-400 transition py-2 w-full text-center">

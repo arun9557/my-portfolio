@@ -1,8 +1,16 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  experimental: {
-    // turbopack: true, ❌ Remove this line
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'img.icons8.com',
+      },
+    ],
   },
-}
+  experimental: {
+    // keep empty for now
+  },
+};
 
 export default nextConfig;
