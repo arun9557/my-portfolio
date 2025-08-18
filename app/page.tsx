@@ -76,31 +76,33 @@ const skillsData: Skill[] = [
   { icon: 'figma', label: 'Figma', category: 'tools' },
 ];
 
-const projects: Project[] = [
+const projects: Project[] = [];
+
+const upcomingProjects: Project[] = [
   {
     title: "IITCohort",
     description: "Smart Batch Collaboration Platform for IIT students to connect, collaborate, and grow together in their academic and professional journeys.",
     tags: ["Next.js", "TypeScript", "Tailwind CSS", "MongoDB", "Node.js"],
     image: "/images/projects/iitcohort.png",
     liveUrl: "https://iitcohort.vercel.app/",
-    isFeatured: true
+    isFeatured: true,
   },
   {
     title: "Portfolio Website",
     description: "A modern, responsive portfolio website built with Next.js and Framer Motion, showcasing my projects and skills with smooth animations.",
     tags: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Framer Motion"],
-    image: "/images/projects/portfolio.png",
+    image: "/next.svg",
     liveUrl: "https://my-portfolio-kappa-five-34.vercel.app",
     codeUrl: "https://github.com/arun9557/my-portfolio",
-    isFeatured: true
+    isFeatured: true,
   },
   {
-    title: "My Blog",
+    title: "Royal Studio",
     description: "A personal blog platform built with Next.js and Markdown, featuring code syntax highlighting and responsive design.",
     tags: ["Next.js", "Markdown", "Content Layer", "Tailwind CSS"],
-    image: "/images/projects/blog.png",
-    isFeatured: false
-  }
+    image: "/globe.svg",
+    isFeatured: false,
+  },
 ];
 
 interface ProjectCardProps {
@@ -113,9 +115,10 @@ interface ProjectCardProps {
     image: string;
   };
   isDarkMode: boolean;
+  hidePrivatePlaceholder?: boolean;
 }
 
-const ProjectCard: React.FC<ProjectCardProps> = ({ project, isDarkMode }) => {
+const ProjectCard: React.FC<ProjectCardProps> = ({ project, isDarkMode, hidePrivatePlaceholder = false }) => {
   const x = useMotionValue(0);
   const y = useMotionValue(0);
   
@@ -250,7 +253,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, isDarkMode }) => {
               Live Demo
             </motion.a>
           )}
-          {project.codeUrl ? (
+          {project.codeUrl && (
             <motion.a
               href={project.codeUrl}
               target="_blank"
@@ -288,7 +291,8 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, isDarkMode }) => {
               </svg>
               View Code
             </motion.a>
-          ) : (
+          )}
+          {!project.codeUrl && !hidePrivatePlaceholder && (
             <button
               disabled
               className="flex-1 px-4 py-2 text-center rounded-lg font-medium opacity-50 cursor-not-allowed flex items-center justify-center gap-2 border border-gray-300 dark:border-gray-600"
@@ -712,6 +716,9 @@ export default function Home() {
             <a href="#projects" className="hover:text-blue-400 transition">
               Projects
             </a>
+            <a href="#future-projects" className="hover:text-blue-400 transition">
+              Future Projects
+            </a>
             <a href="#" className="hover:text-blue-400 transition">
               Resume
             </a>
@@ -740,6 +747,9 @@ export default function Home() {
             </a>
             <a href="#projects" className="hover:text-blue-400 transition py-2 w-full text-center">
               Projects
+            </a>
+            <a href="#future-projects" className="hover:text-blue-400 transition py-2 w-full text-center">
+              Future Projects
             </a>
             <a href="#" className="hover:text-blue-400 transition py-2 w-full text-center">
               Resume
@@ -1025,16 +1035,18 @@ export default function Home() {
         </div>
       </motion.section>
 
+      
+
       <motion.section
-        id="projects"
-        className="relative max-w-7xl mx-auto mt-32 px-4 sm:px-6"
+        id="future-projects"
+        className="relative max-w-7xl mx-auto mt-24 px-4 sm:px-6"
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
         viewport={{ once: true, margin: "-100px" }}
       >
         <div className="relative">
-          <div className="text-center mb-16">
+          <div className="text-center mb-12">
             <motion.div 
               className="inline-block mb-4"
               initial={{ opacity: 0, y: 20 }}
@@ -1066,8 +1078,8 @@ export default function Home() {
             </motion.p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
-            {projects.map((project, index) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {upcomingProjects.map((project, index) => (
               <motion.article
                 key={`${project.title}-${index}`}
                 initial={{ opacity: 0, y: 40 }}
@@ -1090,52 +1102,14 @@ export default function Home() {
                 viewport={{ once: true, margin: "-50px" }}
                 className="group relative overflow-hidden rounded-2xl border border-white/5 bg-gradient-to-br from-gray-900/70 to-gray-800/50 backdrop-blur-lg shadow-2xl hover:shadow-blue-500/10 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:ring-offset-2 focus:ring-offset-gray-900 transition-all duration-300"
                 tabIndex={0}
-                aria-label={`Project: ${project.title}`}
+                aria-label={`Upcoming Project: ${project.title}`}
               >
                 <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-cyan-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 <div className="absolute inset-0.5 rounded-2xl bg-gradient-to-br from-blue-500/5 to-cyan-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                <ProjectCard project={project} isDarkMode={isDarkMode} />
+                <ProjectCard project={project} isDarkMode={isDarkMode} hidePrivatePlaceholder={true} />
               </motion.article>
             ))}
           </div>
-          
-          <motion.div 
-            className="mt-16 text-center"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4 }}
-            viewport={{ once: true }}
-          >
-            <motion.a
-              href="https://github.com/arun9557"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full font-medium transition-all duration-300 text-sm sm:text-base group"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = isDarkMode 
-                  ? 'linear-gradient(135deg, rgba(99, 102, 241, 0.15) 0%, rgba(59, 130, 246, 0.15) 100%)' 
-                  : 'linear-gradient(135deg, rgba(99, 102, 241, 0.15) 0%, rgba(59, 130, 246, 0.15) 100%)';
-                e.currentTarget.style.boxShadow = isDarkMode 
-                  ? '0 6px 25px -3px rgba(99, 102, 241, 0.2)' 
-                  : '0 6px 25px -3px rgba(59, 130, 246, 0.2)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = isDarkMode 
-                  ? 'linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(59, 130, 246, 0.1) 100%)' 
-                  : 'linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(59, 130, 246, 0.1) 100%)';
-                e.currentTarget.style.boxShadow = isDarkMode 
-                  ? '0 4px 20px -5px rgba(99, 102, 241, 0.1)' 
-                  : '0 4px 20px -5px rgba(59, 130, 246, 0.1)';
-              }}
-            >
-              View All Projects on GitHub
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-1 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-              </svg>
-            </motion.a>
-          </motion.div>
         </div>
       </motion.section>
 
