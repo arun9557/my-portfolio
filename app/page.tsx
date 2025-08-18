@@ -98,10 +98,12 @@ const upcomingProjects: Project[] = [
   },
   {
     title: "Royal Studio",
-    description: "A personal blog platform built with Next.js and Markdown, featuring code syntax highlighting and responsive design.",
+    description: "A sophisticated AI-powered chatbot application with image generation and SMS capabilities, built with Flask backend and React frontend..",
     tags: ["Next.js", "Markdown", "Content Layer", "Tailwind CSS"],
     image: "/globe.svg",
-    isFeatured: false,
+    liveUrl: "https://royalainew.vercel.app/",
+    codeUrl: "https://github.com/arun9557/Ai_bot---image-text-genrater",
+    isFeatured: true,
   },
 ];
 
